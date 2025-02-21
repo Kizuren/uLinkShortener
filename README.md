@@ -38,3 +38,10 @@ This project is the code behind [u.marcus7i.net](https://u.marcus7i.net), a cust
    docker-compose up --build
    ```
 2. The application will be available at http://localhost:5000
+
+## Using GHCR
+
+Pull the prebuilt image:
+   ```bash
+   docker pull ghcr.io/MarcUs7i/ulinkshortener:latest
+   ```
