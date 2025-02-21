@@ -22,4 +22,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/ulinkshortener:latest
+          tags: ghcr.io/${{ github.repository_owner | lower }}/ulinkshortener:latest
