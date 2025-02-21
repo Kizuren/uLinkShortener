@@ -87,7 +87,9 @@ def register():
         account_id = ''.join(random.choices(string.digits, k=8))
     
     mongo.db.users.insert_one({'account_id': account_id})
-    return jsonify({'account_id': account_id})
+    response = make_response(jsonify({'account_id': account_id}))
+    response.set_cookie('account_id', account_id, max_age=31536000)
+    return response
 
 @app.route('/login', methods=['POST'])
 def login():
