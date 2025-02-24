@@ -19,8 +19,14 @@ def generate_short_id():
 
 def get_client_info():
     user_agent = request.user_agent
+    ip_address = (request.headers.get('CF-Connecting-IP') or 
+                 request.headers.get('X-Real-IP') or 
+                 request.headers.get('X-Forwarded-For', '').split(',')[0].strip() or 
+                 request.remote_addr or 
+                 'Unknown')
+    
     return {
-        'ip': request.remote_addr or 'Unknown',
+        'ip': ip_address,
         'user_agent': user_agent.string,
         'platform': request.headers.get('sec-ch-ua-platform', user_agent.platform or 'Unknown'),
         'browser': user_agent.browser or 'Unknown',
@@ -36,7 +42,7 @@ def get_client_info():
         'window_size': request.headers.get('Viewport-Width', 'Unknown'),
         'country': request.headers.get('CF-IPCountry', 'Unknown'),  # If using Cloudflare
         'isp': request.headers.get('X-ISP', 'Unknown'),  # Requires additional middleware
-        'ip_version': 'IPv6' if ':' in request.remote_addr else 'IPv4'
+        'ip_version': 'IPv6' if ':' in ip_address else 'IPv4'
     }
 
 def is_valid_url(url):
