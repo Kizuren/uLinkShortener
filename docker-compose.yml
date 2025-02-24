@@ -1,6 +1,6 @@
 services:
   ulinkshortener:
-    image: ghcr.io/MarcUs7i/ulinkshortener:latest
+    image: ghcr.io/marcus7i/ulinkshortener:latest
     container_name: ulinkshortener
     restart: unless-stopped
     network_mode: "host"
