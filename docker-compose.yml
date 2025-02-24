@@ -1,33 +1,8 @@
-version: '3.8'
-
 services:
-  web:
-    build: .
-    ports:
-      - "5000:5000"
-    environment:
-      - MONGO_URI=mongodb://mongo:27017/uLinkShortener
-    depends_on:
-      - mongo
+  ulinkshortener:
+    image: ghcr.io/MarcUs7i/ulinkshortener:latest
+    container_name: ulinkshortener
     restart: unless-stopped
-    networks:
-      - app-network
-
-  mongo:
-    image: mongo:latest
+    network_mode: "host"
     volumes:
-      - mongodb_data:/data/db
-    ports:
-      - "27017:27017"
-    networks:
-      - app-network
-    environment:
-      - MONGO_INITDB_DATABASE=uLinkShortener
-    restart: unless-stopped
-
-volumes:
-  mongodb_data:
-
-networks:
-  app-network:
-    driver: bridge
+      - ./.env:/app/.env
