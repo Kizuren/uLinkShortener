@@ -12,7 +12,5 @@ RUN apk --no-cache add ca-certificates
 COPY --from=builder /app/ulinkshortener .
 COPY --from=builder /app/web /app/web
 
-ENV PORT=5000
-EXPOSE 5000
-
+EXPOSE ${PORT}
 CMD ["./ulinkshortener"]
