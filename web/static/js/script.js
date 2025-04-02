@@ -1,5 +1,6 @@
 let currentAccount = '';
 let refreshInterval;
+const chartInstances = {};
 
 function showError(elementId, message) {
     const errorElement = document.getElementById(elementId);
@@ -33,7 +34,7 @@ window.addEventListener('load', () => {
     if (accountId) {
         handleLogin(accountId);
     }
-    setInterval(refreshPublicStats, 5000);
+    //setInterval(refreshPublicStats, 5000);
 });
 
 async function refreshPublicStats() {
@@ -172,18 +173,38 @@ function closeDeleteDialog() {
 }
 
 async function loadAnalytics() {
+    if (!currentAccount) {
+        console.log("No account ID available");
+        return;
+    }
+
     const response = await fetch(`/analytics/${currentAccount}`);
+    if (!response.ok) {
+        console.error(`Failed to fetch analytics: ${response.status}`);
+        return;
+    }
+
     const data = await response.json();
+    if (!data) {
+        console.error("Invalid analytics data format");
+        return;
+    }
+
+    const analyticsDiv = document.getElementById('analytics');
+    analyticsDiv.innerHTML = '<h2>Your Analytics</h2>';
+    if (!data.links || data.links.length === 0) {
+        analyticsDiv.innerHTML += '<p>No links created yet.</p>';
+        return;
+    }
+
+    const analytics = data.analytics || [];
     
     const openDetails = Array.from(document.querySelectorAll('details[open]')).map(
         detail => detail.getAttribute('data-visit-id')
     );
     
-    const analyticsDiv = document.getElementById('analytics');
-    analyticsDiv.innerHTML = '<h2>Your Analytics</h2>';
-    
     data.links.forEach(link => {
-        const linkAnalytics = data.analytics.filter(a => a.link_id === link.short_id);
+        const linkAnalytics = analytics.filter(a => a.link_id === link.short_id);
         const clicks = linkAnalytics.length;
         const shortUrl = `${window.location.origin}/l/${link.short_id}`;
         
@@ -275,7 +296,11 @@ function createCharts() {
     Object.entries(chartConfigs).forEach(([chartId, config]) => {
         const ctx = document.getElementById(chartId);
         if (ctx) {
-            new Chart(ctx, {
+            if (chartInstances[chartId]) {
+                chartInstances[chartId].destroy();
+            }
+            
+            chartInstances[chartId] = new Chart(ctx, {
                 type: 'pie',
                 data: {
                     labels: config.data.map(item => item._id || 'Unknown'),

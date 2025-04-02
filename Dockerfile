@@ -1,20 +1,16 @@
-FROM python:3.11-slim
+FROM golang:1.21-alpine AS builder
 
 WORKDIR /app
-
-# Copy requirements first to leverage Docker cache
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Copy application code
+COPY go.mod go.sum ./
+RUN go mod download
 COPY . .
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o ulinkshortener ./cmd/api
+FROM alpine:latest
 
-# Set environment variables
-ENV FLASK_APP=server.py
-ENV FLASK_ENV=production
+WORKDIR /app
+RUN apk --no-cache add ca-certificates
+COPY --from=builder /app/ulinkshortener .
+COPY --from=builder /app/web /app/web
 
-# Expose port
-EXPOSE 5000
-
-# Run the application
-CMD ["python", "server.py"]
+EXPOSE ${PORT}
+CMD ["./ulinkshortener"]
