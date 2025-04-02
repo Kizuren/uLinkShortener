@@ -34,7 +34,7 @@ window.addEventListener('load', () => {
     if (accountId) {
         handleLogin(accountId);
     }
-    setInterval(refreshPublicStats, 5000);
+    //setInterval(refreshPublicStats, 5000);
 });
 
 async function refreshPublicStats() {
