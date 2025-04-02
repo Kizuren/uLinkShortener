@@ -1,5 +1,6 @@
 let currentAccount = '';
 let refreshInterval;
+const chartInstances = {};
 
 function showError(elementId, message) {
     const errorElement = document.getElementById(elementId);
@@ -275,7 +276,11 @@ function createCharts() {
     Object.entries(chartConfigs).forEach(([chartId, config]) => {
         const ctx = document.getElementById(chartId);
         if (ctx) {
-            new Chart(ctx, {
+            if (chartInstances[chartId]) {
+                chartInstances[chartId].destroy();
+            }
+            
+            chartInstances[chartId] = new Chart(ctx, {
                 type: 'pie',
                 data: {
                     labels: config.data.map(item => item._id || 'Unknown'),
