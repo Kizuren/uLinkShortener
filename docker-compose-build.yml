@@ -1,30 +1,10 @@
 services:
-  web:
-    build: .
+  ulinkshortener:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ulinkshortener
+    restart: unless-stopped
     network_mode: "host"
-    environment:
-      - MONGO_URI=mongodb://mongo:27017/uLinkShortener
-    depends_on:
-      - mongo
-    restart: unless-stopped
-    networks:
-      - app-network
-
-  mongo:
-    image: mongo:latest
     volumes:
-      - mongodb_data:/data/db
-    ports:
-      - "27017:27017"
-    networks:
-      - app-network
-    environment:
-      - MONGO_INITDB_DATABASE=uLinkShortener
-    restart: unless-stopped
-
-volumes:
-  mongodb_data:
-
-networks:
-  app-network:
-    driver: bridge
+      - ./.env:/app/.env
