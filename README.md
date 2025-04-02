@@ -1,36 +1,43 @@
 # uLinkShortener
 
-This project is the code behind [u.marcus7i.net](https://u.marcus7i.net), a custom URL shortener. It uses Flask, MongoDB, and Docker for quick deployment.
+This project is the code behind [u.marcus7i.net](https://u.marcus7i.net), a custom URL shortener. It uses Go, MongoDB, and Docker for quick deployment.
 
 ## Prerequisites
-- Python
+- Go
 - MongoDB database (local or remote)
 - Docker & Docker Compose (optional, for containerized deployments)
 
 ## Setup
 1. Clone the repository
-2. Create a virtual environment (optional):
-   ```
-   python -m venv env
-   source env/bin/activate  # Linux/Mac
-   env\Scripts\activate     # Windows
-   ```
-3. Install dependencies:
-   ```
-   pip install -r requirements.txt
-   ```
 4. Define environment variables in the `.env` file:
    ```
    MONGO_URI=mongodb://<username>:<password>@<host>:<port>/<database>
+   PORT=<desired_port>
    ```
 
 ## Running Locally
-1. Start MongoDB
-2. Run:
+
+### Without Docker
+
+1. Install dependencies:
    ```
-   python server.py
+   go mod download
    ```
-3. Access the app at http://localhost:5000
+2. Build and run:
+   ```
+   go run cmd/api/main.go
+   ```
+
+### With Docker
+
+1. Build and run with docker compose:
+   ```
+   docker-compose -f docker-compose-build.yml up --build
+   ```
+2. Use of pre-built image:
+   ```
+   docker compose up -d
+   ```
 
 ## Docker Deployment
 1. Build and run containers:
@@ -39,9 +46,6 @@ This project is the code behind [u.marcus7i.net](https://u.marcus7i.net), a cust
    ```
 2. The application will be available at http://localhost:5000
 
-## Using GHCR
+## License
 
-Pull the prebuilt image:
-   ```bash
-   docker pull ghcr.io/MarcUs7i/ulinkshortener:latest
-   ```
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
