@@ -1,0 +1,228 @@
+.adminContainer {
+  max-width: 75rem;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.adminHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.adminTitle {
+  font-size: 2rem;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.actionButtons {
+  display: flex;
+  gap: 1rem;
+}
+
+.dashboardButton, .statsButton {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.dashboardButton {
+  background-color: var(--accent);
+  color: white;
+}
+
+.statsButton {
+  background-color: var(--success);
+  color: white;
+}
+
+.dashboardButton:hover, .statsButton:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+.statsButton:disabled {
+  background-color: var(--disabled-bg);
+  color: var(--disabled-text);
+  cursor: not-allowed;
+  transform: none;
+}
+
+.usersSection {
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  border: 1px solid var(--border-color);
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.searchContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.searchInput {
+  padding: 0.5rem 0.75rem;
+  padding-right: 2rem;
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+  background-color: var(--input-bg);
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  width: 250px;
+}
+
+.clearSearchButton {
+  position: absolute;
+  right: 0.5rem;
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.tableContainer {
+  overflow-x: auto;
+}
+
+.usersTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.5rem;
+}
+
+.usersTable th,
+.usersTable td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.usersTable th {
+  background-color: var(--table-header-bg);
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.usersTable tr:last-child td {
+  border-bottom: none;
+}
+
+.usersTable tr:hover td {
+  background-color: var(--hover-bg);
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.viewButton, .deleteButton {
+  padding: 0.4rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.viewButton {
+  background-color: var(--accent);
+  color: white;
+}
+
+.deleteButton {
+  background-color: var(--error);
+  color: white;
+}
+
+.viewButton:hover, .deleteButton:hover {
+  opacity: 0.9;
+}
+
+.noResults {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  color: var(--text-secondary);
+  font-size: 1rem;
+}
+
+.makeAdminButton, .removeAdminButton {
+  padding: 0.4rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  margin-right: 0.5rem;
+}
+
+.makeAdminButton {
+  background-color: var(--success);
+  color: white;
+}
+
+.removeAdminButton {
+  background-color: var(--warning);
+  color: white;
+}
+
+.makeAdminButton:hover, .removeAdminButton:hover {
+  opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+  .adminHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .actionButtons {
+    width: 100%;
+  }
+  
+  .sectionHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .searchContainer {
+    width: 100%;
+  }
+  
+  .searchInput {
+    width: 100%;
+  }
+  
+  .actions {
+    flex-direction: column;
+  }
+}

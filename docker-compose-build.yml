@@ -3,8 +3,13 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: ulinkshortener
-    restart: unless-stopped
-    network_mode: "host"
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGO_URI=${MONGO_URI}
+      - MONGO_DB_NAME=${MONGO_DB_NAME}
+      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
+      - NEXTAUTH_URL=${NEXTAUTH_URL}
     volumes:
       - ./.env:/app/.env
+    restart: unless-stopped

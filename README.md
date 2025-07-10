@@ -1,9 +1,9 @@
-# uLinkShortener
+# µLinkShortener v2
 
-This project is the code behind [u.marcus7i.net](https://u.marcus7i.net), a custom URL shortener. It uses Go, MongoDB, and Docker for quick deployment.
+This project is the code behind [u.marcus7i.net](https://u.marcus7i.net), a custom URL shortener. It uses Next.JS, MongoDB, and Docker for quick deployment.
 
 ## Prerequisites
-- Go
+- Next.js
 - MongoDB database (local or remote)
 - Docker & Docker Compose (optional, for containerized deployments)
 
@@ -12,7 +12,9 @@ This project is the code behind [u.marcus7i.net](https://u.marcus7i.net), a cust
 4. Define environment variables in the `.env` file:
    ```
    MONGO_URI=mongodb://<username>:<password>@<host>:<port>/<database>
-   PORT=<desired_port>
+   MONGO_DB_NAME=<database>
+   NEXTAUTH_SECRET=VERY_SECURE_SECRET
+   NEXTAUTH_URL=http://localhost:3000
    ```
 
 ## Running Locally
@@ -21,11 +23,12 @@ This project is the code behind [u.marcus7i.net](https://u.marcus7i.net), a cust
 
 1. Install dependencies:
    ```
-   go mod download
+   bun install
    ```
 2. Build and run:
    ```
-   go run cmd/api/main.go
+   bun run build
+   bun run start
    ```
 
 ### With Docker
@@ -44,7 +47,7 @@ This project is the code behind [u.marcus7i.net](https://u.marcus7i.net), a cust
    ```
    docker-compose up --build
    ```
-2. The application will be available at http://localhost:5000
+2. The application will be available at http://localhost:3000
 
 ## License
 

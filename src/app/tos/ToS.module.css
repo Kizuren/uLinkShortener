@@ -1,0 +1,116 @@
+.default-container {
+  width: 100%;
+  max-width: 90%;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+@media (min-width: 768px) {
+  .default-container {
+    max-width: 80%;
+  }
+}
+@media (min-width: 1200px) {
+  .default-container {
+    max-width: 60%;
+  }
+}
+
+/* Hero section */
+.hero-section {
+  min-height: 25vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 3rem 0 2rem;
+}
+
+.hero-title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(90deg, var(--accent), #9089fc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-description {
+  font-size: 1.25rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+}
+
+.hero-cta {
+  display: inline-block;
+  background-color: var(--accent);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.hero-cta:hover {
+  background-color: var(--accent-hover);
+}
+
+.content {
+  padding: 2rem 0 4rem;
+}
+
+.policy-text-container {
+  margin: 0 auto;
+}
+
+.policy-section-title {
+  font-size: 1.75rem;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 0.5rem;
+}
+
+.policy-text {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.policy-text p {
+  margin-bottom: 1rem;
+}
+
+.policy-text ul {
+  margin-left: 1.5rem;
+  margin-bottom: 1rem;
+  list-style-type: disc;
+}
+
+.policy-text li {
+  margin-bottom: 0.5rem;
+  display: list-item;
+}
+
+.policy-text-container .policy-section-title:first-child {
+  margin-top: 0;
+}
+
+@media (max-width: 768px) {
+  .policy-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+.link {
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.link:hover {
+  color: var(--primary-color);
+  text-decoration: underline;
+}
