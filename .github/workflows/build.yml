@@ -36,9 +36,10 @@ jobs:
       id: meta
       uses: docker/metadata-action@v5
       with:
-        images: ghcr.io/marcus7i/ulinkshortener
+        images: ghcr.io/${{ github.repository }}
         tags: |
-          type=raw,value=latest
+          type=ref,event=tag
+          type=raw,value=latest,enable={{is_default_branch}}
           type=sha,format=short
           type=ref,event=branch
           type=ref,event=pr
@@ -50,5 +51,5 @@ jobs:
         file: ./Dockerfile
         push: ${{ github.event_name != 'pull_request' }}
         platforms: linux/amd64, linux/arm64/v8
-        tags: ghcr.io/marcus7i/ulinkshortener:latest
+        tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}

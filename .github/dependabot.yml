@@ -1,14 +1,32 @@
 version: 2
 updates:
-  - package-ecosystem: "gomod"
+  # Monitor npm dependencies
+  - package-ecosystem: "npm"
     directory: "/"
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 10
-    
-  # Enable version updates for GitHub Actions
-  - package-ecosystem: "github-actions"
+    versioning-strategy: auto
+    labels:
+      - "dependencies"
+      - "npm"
+
+  # Monitor Docker dependencies
+  - package-ecosystem: "docker"
     directory: "/"
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "docker"
+
+  # Monitor GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "github-actions"

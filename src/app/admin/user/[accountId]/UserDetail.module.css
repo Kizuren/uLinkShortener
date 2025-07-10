@@ -1,0 +1,174 @@
+.container {
+  max-width: 75rem;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.title {
+  font-size: 2rem;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.actionButtons {
+  display: flex;
+  gap: 1rem;
+}
+
+.backButton, .deleteButton {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.backButton {
+  background-color: var(--accent);
+  color: white;
+}
+
+.deleteButton {
+  background-color: var(--error);
+  color: white;
+}
+
+.backButton:hover, .deleteButton:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+.userInfo, .linksSection, .sessionsSection {
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  border: 1px solid var(--border-color);
+}
+
+.infoCard {
+  background-color: var(--card-secondary-bg);
+  border-radius: 6px;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.infoRow {
+  display: flex;
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.infoRow:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.infoLabel {
+  width: 120px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.infoValue {
+  flex: 1;
+  color: var(--text-primary);
+}
+
+.noItems {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.tableContainer {
+  overflow-x: auto;
+}
+
+.sessionsTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.5rem;
+}
+
+.sessionsTable th,
+.sessionsTable td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.sessionsTable th {
+  background-color: var(--table-header-bg);
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.sessionsTable tr:last-child td {
+  border-bottom: none;
+}
+
+.sessionsTable tr:hover td {
+  background-color: var(--hover-bg);
+}
+
+.revokeButton {
+  padding: 0.4rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  background-color: var(--error);
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.revokeButton:hover {
+  opacity: 0.9;
+}
+
+.revokeButton:disabled {
+  background-color: var(--disabled-bg);
+  color: var(--disabled-text);
+  cursor: not-allowed;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  color: var(--text-secondary);
+  font-size: 1rem;
+}
+
+.error {
+  text-align: center;
+  padding: 2rem;
+  color: var(--error);
+  font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .actionButtons {
+    width: 100%;
+  }
+}

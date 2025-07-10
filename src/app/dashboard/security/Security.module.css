@@ -1,0 +1,120 @@
+.container {
+  max-width: 75rem;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.header h1 {
+  font-size: 2rem;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.backLink {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  background-color: var(--accent);
+  color: var(--text-primary);
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.backLink:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.sessionSection,
+.dangerSection {
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  padding: 1.5rem;
+  border: 1px solid var(--border-color);
+}
+
+.sessionSection h2,
+.dangerSection h2 {
+  font-size: 1.6rem;
+  margin: 0 0 1.5rem 0;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border-color);
+  font-weight: 600;
+}
+
+.dangerSection h2 {
+  color: #dc3545;
+  border-bottom-color: rgba(220, 53, 69, 0.3);
+}
+
+.sessionSection {
+  margin-bottom: 1rem;
+}
+
+.dangerCard {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  background-color: rgba(220, 53, 69, 0.05);
+  border: 1px solid rgba(220, 53, 69, 0.2);
+  border-radius: 4px;
+}
+
+.dangerInfo h3 {
+  margin-top: 0;
+  color: #dc3545;
+}
+
+.dangerInfo p {
+  color: var(--text-secondary);
+  margin-bottom: 0;
+}
+
+.deleteAccountBtn {
+  padding: 0.5rem 1rem;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.deleteAccountBtn:hover {
+  background-color: #c82333;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .dangerCard {
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: flex-start;
+  }
+  
+  .deleteAccountBtn {
+    width: 100%;
+  }
+}

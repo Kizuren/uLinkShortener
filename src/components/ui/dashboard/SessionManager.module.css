@@ -1,0 +1,157 @@
+.sessionManager {
+  width: 100%;
+}
+
+.sessionManager h2 {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  color: var(--text-primary);
+}
+
+.searchContainer {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+  background-color: var(--input-bg);
+  color: var(--text-primary);
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.clearSearchButton {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 5px;
+}
+
+.clearSearchButton:hover {
+  color: var(--text-primary);
+}
+
+.loading, .error, .noSessions {
+  padding: 2rem;
+  text-align: center;
+  border-radius: 4px;
+}
+
+.loading {
+  color: var(--text-secondary);
+}
+
+.error {
+  color: #dc3545;
+  border: 1px solid rgba(220, 53, 69, 0.2);
+  background-color: rgba(220, 53, 69, 0.05);
+}
+
+.noSessions {
+  color: var(--text-secondary);
+  border: 1px dashed var(--border-color);
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tableContainer {
+  overflow-x: auto;
+  width: 100%;
+  max-width: 100%;
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+}
+
+.sessionsTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  table-layout: fixed;
+}
+
+.sessionsTable th,
+.sessionsTable td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.sessionsTable th {
+  background-color: var(--table-header-bg);
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.deviceCell {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  height: 100%;
+}
+
+.currentSession {
+  background-color: rgba(46, 204, 113, 0.05);
+}
+
+.currentSessionText {
+  color: #2ecc71;
+  font-style: italic;
+}
+
+.revokeButton {
+  padding: 0.4rem 0.75rem;
+  border-radius: 4px;
+  border: none;
+  background-color: #dc3545;
+  color: white;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.revokeButton:hover {
+  background-color: #c82333;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .sessionsTable th:nth-child(3),
+  .sessionsTable td:nth-child(3) {
+    display: none;
+  }
+  
+  .sessionsTable th:nth-child(4),
+  .sessionsTable td:nth-child(4) {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .sessionsTable {
+    font-size: 0.8rem;
+  }
+  
+  .sessionsTable th, 
+  .sessionsTable td {
+    padding: 0.5rem;
+  }
+  
+  .revokeButton {
+    padding: 0.3rem 0.5rem;
+    font-size: 0.75rem;
+  }
+}

@@ -1,16 +1,23 @@
-FROM golang:1.21-alpine AS builder
+FROM oven/bun:1 AS builder
 
 WORKDIR /app
-COPY go.mod go.sum ./
-RUN go mod download
+COPY package.json bun.lock ./
+RUN bun install --frozen-lockfile
 COPY . .
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o ulinkshortener ./cmd/api
-FROM alpine:latest
+
+RUN bun run build
+
+FROM oven/bun:1-slim AS runner
 
 WORKDIR /app
-RUN apk --no-cache add ca-certificates
-COPY --from=builder /app/ulinkshortener .
-COPY --from=builder /app/web /app/web
+ENV NODE_ENV=production
 
-EXPOSE ${PORT}
-CMD ["./ulinkshortener"]
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/package.json ./package.json
+COPY --from=builder /app/next.config.ts ./next.config.ts
+
+RUN bun install --production
+EXPOSE 3000
+
+CMD ["bun", "run", "start"]

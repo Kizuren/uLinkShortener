@@ -1,0 +1,163 @@
+.dashboardContainer {
+  max-width: 75rem;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.dashboardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.dashboardTitle {
+  font-size: 2rem;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.actionButtons {
+  display: flex;
+  gap: 1rem;
+}
+
+.securityButton, .adminButton {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.securityButton {
+  background-color: var(--accent);
+  color: white;
+}
+
+.adminButton {
+  background-color: #8b5cf6;
+  color: white;
+}
+
+.securityButton:hover, .adminButton:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+.urlShortener {
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  border: 1px solid var(--border-color);
+}
+
+.createForm {
+  margin-top: 1rem;
+}
+
+.inputGroup {
+  display: flex;
+  gap: 1rem;
+}
+
+.urlInput {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+  background-color: var(--input-bg);
+  color: var(--text-primary);
+  font-size: 1rem;
+}
+
+.createButton {
+  padding: 0 1.5rem;
+  border-radius: 4px;
+  border: none;
+  background-color: var(--accent);
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.createButton:hover {
+  background-color: var(--accent-hover);
+}
+
+.createButton:disabled {
+  background-color: var(--accent-disabled);
+  cursor: not-allowed;
+}
+
+.linksSection {
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  padding: 1.5rem;
+  border: 1px solid var(--border-color);
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  color: var(--text-secondary);
+  font-size: 1rem;
+}
+
+.noLinks {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+@media (max-width: 1200px) {
+  .dashboardContainer {
+    max-width: 100%;
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .inputGroup {
+    flex-direction: column;
+  }
+  
+  .dashboardHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .actionButtons {
+    width: 100%;
+    justify-content: flex-start;
+  }
+  
+  .urlShortener,
+  .linksSection {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboardContainer {
+    padding: 1rem 0.5rem;
+  }
+  
+  .dashboardTitle {
+    font-size: 1.5rem;
+  }
+  
+  .securityButton, 
+  .adminButton {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+  }
+}

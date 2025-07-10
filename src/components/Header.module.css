@@ -1,0 +1,222 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: var(--header-min-height);
+  background-color: var(--bg-color);
+  border-bottom: 1px solid var(--primary-color);
+  padding: 1rem 0;
+  z-index: 100;
+}
+
+.container {
+  max-width: 90%;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo h1 {
+  margin: 0;
+  font-size: clamp(1rem, 2vw + 0.5rem, 1.5rem);
+  color: var(--primary-color);
+  white-space: nowrap;
+}
+
+.logo a {
+  text-decoration: none;
+}
+
+.auth {
+  display: flex;
+  gap: clamp(4px, 1vw, 10px);
+  align-items: center;
+  min-width: 0;
+  justify-content: flex-end;
+  flex-shrink: 1;
+}
+
+/* Base button styles for all buttons */
+.loginBtn, .registerBtn, .loginSubmitBtn, .logoutBtn, .dashboardBtn {
+  background-color: var(--accent);
+  color: var(--text-primary);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: clamp(0.75rem, 1vw + 0.5rem, 0.9rem);
+  padding: clamp(4px, 1vw, 8px) clamp(8px, 2vw, 16px);
+}
+
+.loginBtn:hover, .registerBtn:hover, .loginSubmitBtn:hover, .dashboardBtn:hover {
+  background-color: var(--accent-hover);
+  filter: brightness(1.2);
+}
+
+.logoutBtn {
+  background-color: var(--error);
+}
+
+.logoutBtn:hover {
+  background-color: var(--error);
+  filter: brightness(0.8);
+}
+
+.cancelBtn {
+  background-color: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: clamp(0.75rem, 1vw + 0.5rem, 0.9rem);
+  padding: clamp(4px, 1vw, 8px) clamp(8px, 2vw, 16px);
+}
+
+.cancelBtn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 1rem;
+  }
+  
+  .auth {
+    gap: 5px;
+  }
+}
+
+@media (max-width: 600px) {
+  .container {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .header {
+    height: auto;
+  }
+  
+  .auth {
+    width: 100%;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  .loginBtn, .registerBtn {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+  }
+}
+
+.loginForm {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.accountInput {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: clamp(6px, 1vw, 8px) clamp(8px, 1.5vw, 12px);
+  border-radius: 4px;
+  outline: none;
+  transition: border-color 0.3s;
+  font-size: clamp(0.75rem, 1vw + 0.5rem, 0.9rem);
+}
+
+.cancelBtn {
+  background-color: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.cancelBtn:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+}
+
+/* Animations */
+.animateIn {
+  animation: slideIn 0.3s ease forwards;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 600px) {
+  .loginForm {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .auth {
+    min-width: auto;
+  }
+}
+
+.userInfo {
+  display: flex;
+  gap: clamp(5px, 1vw, 10px);
+  align-items: center;
+}
+
+.accountIdDisplay {
+  font-size: clamp(0.7rem, 1vw + 0.4rem, 0.9rem);
+  padding: clamp(3px, 0.5vw, 4px) clamp(6px, 1vw, 8px);
+  color: var(--text-primary);
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.accountIdDisplay:hover {
+  background-color: var(--bg-secondary);
+  border-color: var(--accent);
+}
+
+.accountIdDisplay:hover .copyIndicator {
+  opacity: 1;
+}
+
+.copyMessage {
+  position: absolute;
+  top: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--accent);
+  color: white;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  opacity: 0;
+  transition: opacity 0.2s;
+  pointer-events: none;
+}
+
+.copied .copyMessage {
+  opacity: 1;
+}
+
+.idLabel {
+  color: var(--text-secondary);
+}

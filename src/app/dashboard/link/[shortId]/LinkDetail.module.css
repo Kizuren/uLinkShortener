@@ -1,0 +1,280 @@
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.backLink {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  background-color: var(--accent);
+  color: var(--text-primary);
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.backLink:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+.title {
+  font-size: 2rem;
+  margin: 0;
+  color: var(--text-primary);
+}
+
+.linkInfo {
+  margin-bottom: 2rem;
+}
+
+.linkCard {
+  background-color: var(--card-bg);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  box-shadow: var(--card-shadow);
+}
+
+.linkCard h2 {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  color: var(--text-primary);
+  font-size: 1.5rem;
+}
+
+.linkDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.linkDetailItem {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 0.25rem;
+}
+
+.value {
+  color: var(--text-primary);
+  word-break: break-all;
+}
+
+.shortUrl {
+  color: var(--primary-color);
+  word-break: break-all;
+  text-decoration: none;
+}
+
+.shortUrl:hover {
+  text-decoration: underline;
+}
+
+.defaultButton {
+  background-color: transparent;
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  border-radius: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.defaultButton:hover {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.targetUrlSection {
+  margin-top: 0.5rem;
+}
+
+.targetUrlHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.targetUrl {
+  color: var(--text-primary);
+  word-break: break-all;
+  text-decoration: none;
+}
+
+.targetUrl:hover {
+  text-decoration: underline;
+  color: var(--primary-color);
+}
+
+.editForm {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.urlInput {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 0.25rem;
+  background-color: var(--input-bg);
+  color: var(--text-primary);
+}
+
+.editActions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+}
+
+.cancelButton {
+  background-color: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 0.25rem;
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+}
+
+.cancelButton:hover {
+  background-color: var(--border-color);
+}
+
+.saveButton {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+}
+
+.saveButton:hover {
+  background-color: var(--primary-dark);
+}
+
+.analyticsSection {
+  margin-top: 2rem;
+}
+
+.analyticsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.analyticsHeader h2 {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 1.5rem;
+}
+
+.totalClicks {
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.deleteAllButton {
+  background-color: transparent;
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  border-radius: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.deleteAllButton:hover {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.graphs {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.graphCard {
+  background-color: var(--card-bg);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  box-shadow: var(--card-shadow);
+}
+
+.graphCard h3 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+  font-size: 1rem;
+  text-align: center;
+}
+
+.noAnalytics {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--card-bg);
+  border-radius: 0.5rem;
+  padding: 2rem;
+  box-shadow: var(--card-shadow);
+}
+
+.noAnalytics p {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  text-align: center;
+}
+
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+  gap: 1rem;
+}
+
+.loader {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left-color: var(--primary-color);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 768px) {
+  .analyticsHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .graphs {
+    grid-template-columns: 1fr;
+  }
+}
