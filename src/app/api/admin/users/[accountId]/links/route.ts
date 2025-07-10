@@ -7,7 +7,7 @@ import logger from '@/lib/logger';
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { accountId: string } }
+  { params }: { params: Promise<{ accountId: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -36,7 +36,7 @@ export async function GET(
       success: true,
     });
   } catch (error) {
-    logger.error('Error getting user links:', { error });
+    logger.error('Error getting user links:', error);
     return NextResponse.json({
       message: "Failed to retrieve user links",
       success: false,

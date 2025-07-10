@@ -1,15 +1,5 @@
 import { Db, MongoClient, ObjectId } from "mongodb";
 
-const uri = process.env.MONGO_URI!;
-const dbName = process.env.MONGO_DB_NAME!;
-
-if (!process.env.MONGO_URI) {
-  throw new Error('Please add your MongoDB URI to .env');
-}
-if (!process.env.MONGO_DB_NAME) {
-  throw new Error('Please add your MongoDB DB name to .env');
-}
-
 let client: MongoClient;
 let db: Db;
 
@@ -26,10 +16,17 @@ export async function getMongo(): Promise<{ client: MongoClient; db: Db }> {
   if (client && db) {
     return { client, db };
   }
+  
+  if (!process.env.MONGO_URI) {
+    throw new Error('Please add your MongoDB URI to .env');
+  }
+  if (!process.env.MONGO_DB_NAME) {
+    throw new Error('Please add your MongoDB DB name to .env');
+  }
 
-  client = new MongoClient(uri);
+  client = new MongoClient(process.env.MONGO_URI);
   await client.connect();
-  db = client.db(dbName);
+  db = client.db(process.env.MONGO_DB_NAME);
 
   return { client, db };
 }

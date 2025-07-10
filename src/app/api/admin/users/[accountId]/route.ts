@@ -7,7 +7,7 @@ import { sanitizeMongoDocument } from '@/lib/utils';
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { accountId: string } }
+  { params }: { params: Promise<{ accountId: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions);

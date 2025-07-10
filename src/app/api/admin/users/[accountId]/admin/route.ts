@@ -7,7 +7,7 @@ import logger from '@/lib/logger';
 
 export async function POST(
   req: NextRequest,
-  { params }: { params: { accountId: string } }
+  { params }: { params: Promise<{ accountId: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -19,7 +19,7 @@ export async function POST(
       }, { status: 401 });
     }
     
-    const { accountId } = params;
+    const { accountId } = await params;
     
     if (!accountId) {
       return NextResponse.json({
@@ -58,7 +58,7 @@ export async function POST(
       success: true,
     });
   } catch (error) {
-    logger.error('Error toggling admin status:', { error });
+    logger.error('Error toggling admin status:', error);
     return NextResponse.json({
       message: "Failed to toggle admin status",
       success: false,

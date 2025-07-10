@@ -7,7 +7,7 @@ import logger from '@/lib/logger';
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { accountId: string } }
+  { params }: { params: Promise<{ accountId: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -38,7 +38,7 @@ export async function GET(
       success: true,
     });
   } catch (error) {
-    logger.error('Error getting user sessions:', { error });
+    logger.error('Error getting user sessions:', error);
     return NextResponse.json({
       message: "Failed to retrieve user sessions",
       success: false,

@@ -265,7 +265,7 @@ export default function Graph({
               data={getBarData()} 
               options={getOptions()} 
               ref={(ref) => {
-                if (ref) chartRef.current = ref.chartInstance;
+                if (ref) chartRef.current = ref;
               }}
             />
           )}
@@ -274,7 +274,7 @@ export default function Graph({
               data={getLineData()} 
               options={getOptions()} 
               ref={(ref) => {
-                if (ref) chartRef.current = ref.chartInstance;
+                if (ref) chartRef.current = ref;
               }}
             />
           )}
@@ -283,7 +283,7 @@ export default function Graph({
               data={getDoughnutData()} 
               options={getOptions()} 
               ref={(ref) => {
-                if (ref) chartRef.current = ref.chartInstance;
+                if (ref) chartRef.current = ref;
               }}
             />
           )}

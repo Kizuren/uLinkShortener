@@ -6,7 +6,7 @@ import logger from '@/lib/logger';
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { shortId: string } }
+  { params }: { params: Promise<{ shortId: string }> }
 ) {
   try {
     const { shortId } = await params;
@@ -30,7 +30,7 @@ export async function GET(
     
     return NextResponse.redirect(new URL(link.target_url));
   } catch (error) {
-    logger.error('Link redirection error', { error });
+    logger.error('Link redirection error', error);
     return NextResponse.redirect(new URL('/error', req.url));
   }
 }
