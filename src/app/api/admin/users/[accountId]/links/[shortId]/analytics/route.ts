@@ -7,7 +7,7 @@ import logger from '@/lib/logger';
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { accountId: string, shortId: string } }
+  { params }: { params: Promise<{ accountId: string, shortId: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -51,7 +51,7 @@ export async function GET(
       success: true,
     });
   } catch (error) {
-    logger.error('Error getting analytics:', { error, accountId: params.accountId, shortId: params.shortId });
+    logger.error('Error getting analytics:', { error, accountId: (await params).accountId, shortId: (await params).shortId });
     return NextResponse.json({
       message: "Failed to retrieve analytics",
       success: false,
@@ -61,7 +61,7 @@ export async function GET(
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { accountId: string, shortId: string } }
+  { params }: { params: Promise<{ accountId: string, shortId: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -107,7 +107,7 @@ export async function DELETE(
       success: false,
     }, { status: 400 });
   } catch (error) {
-    logger.error('Error deleting analytics:', { error, accountId: params.accountId, shortId: params.shortId });
+    logger.error('Error deleting analytics:', { error, accountId: (await params).accountId, shortId: (await params).shortId });
     return NextResponse.json({
       message: "Failed to delete analytics",
       success: false,

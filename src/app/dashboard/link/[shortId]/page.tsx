@@ -4,12 +4,13 @@ import { useState, useEffect, useRef } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useToast } from '@/contexts/ToastContext';
-import Graph, { StatItem } from '@/components/ui/Graph';
+import Graph from '@/components/ui/Graph';
 import ConfirmModal from '@/components/ui/ConfirmModal';
 import AnalyticsTable from '@/components/ui/dashboard/link/AnalyticsTable';
 import styles from './LinkDetail.module.css';
 import { Analytics } from '@/types/analytics';
-import { Link as LinkType } from '@/types/link';
+import type { Link as LinkType } from '@/types/link';
+import type { StatItem } from '@/types/statistics';
 
 export default function LinkDetailPage() {
   const params = useParams();
