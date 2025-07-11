@@ -1,6 +1,6 @@
 # µLinkShortener v2
 
-This project is the code behind [u.marcus7i.net](https://u.marcus7i.net), a custom URL shortener. It uses Next.JS, MongoDB, and Docker for quick deployment.
+This project is the code behind [u.kizuren.dev](https://u.kizuren.dev), a custom URL shortener. It uses Next.JS, MongoDB, and Docker for quick deployment.
 
 ## Prerequisites
 - Next.js
