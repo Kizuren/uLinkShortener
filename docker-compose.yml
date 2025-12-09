@@ -7,7 +7,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - MONGO_URI=mongodb://justasuser:veryimportantpasswd@mongo:27017/ulinkshortener?authSource=admin
+      - MONGO_URI=mongodb://justauser:veryimportantpasswd@mongo:27017/ulinkshortener?authSource=admin
       - MONGO_DB_NAME=ulinkshortener
       - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
       - NEXTAUTH_URL=${NEXTAUTH_URL}
