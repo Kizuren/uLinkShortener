@@ -3,13 +3,12 @@
 This project is the code behind [u.kizuren.dev](https://u.kizuren.dev), a custom URL shortener. It uses Next.JS, MongoDB, and Docker for quick deployment.
 
 ## Prerequisites
-- Next.js
-- MongoDB database (local or remote)
-- Docker & Docker Compose (optional, for containerized deployments)
+- bun (optional, for development)
+- Docker & Docker Compose
 
 ## Setup
 1. Clone the repository
-4. Define environment variables in the `.env` file:
+4. Define environment variables in the `.env` file (mongo connection string is not needed when using docker):
    ```
    MONGO_URI=mongodb://<username>:<password>@<host>:<port>/<database>
    MONGO_DB_NAME=<database>
@@ -23,7 +22,7 @@ This project is the code behind [u.kizuren.dev](https://u.kizuren.dev), a custom
 
 1. Install dependencies:
    ```
-   bun install
+   bun i
    ```
 2. Build and run:
    ```
@@ -33,21 +32,11 @@ This project is the code behind [u.kizuren.dev](https://u.kizuren.dev), a custom
 
 ### With Docker
 
-1. Build and run with docker compose:
-   ```
-   docker-compose -f docker-compose-build.yml up --build
-   ```
-2. Use of pre-built image:
    ```
    docker compose up -d
+   docker compose up --build
    ```
-
-## Docker Deployment
-1. Build and run containers:
-   ```
-   docker-compose up --build
-   ```
-2. The application will be available at http://localhost:3000
+The application will be available at http://localhost:3000
 
 ## License
 
