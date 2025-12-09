@@ -1,0 +1,19 @@
+services:
+  mongo:
+    image: mongo:latest
+    container_name: ulinkshortener-mongo-dev
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: justauser
+      MONGO_INITDB_ROOT_PASSWORD: veryimportantpasswd
+      MONGO_INITDB_DATABASE: ulinkshortener
+    command: mongod --bind_ip_all
+    volumes:
+      - mongo_data:/data/db
+      - mongo_config:/data/configdb
+    ports:
+      - "27017:27017"
+
+volumes:
+  mongo_data:
+  mongo_config:
