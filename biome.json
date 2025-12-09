@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.2.4/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.3.8/schema.json",
   "vcs": {
     "enabled": false,
     "clientKind": "git",
@@ -9,6 +9,9 @@
     "ignoreUnknown": false,
     "includes": [
       "**",
+      "!.next",
+      "!.log",
+      "next-env.d.ts",
       "!node_modules",
       "!dist",
       "!build",
@@ -18,13 +21,7 @@
       "!*.log",
       "!tmp",
       "!temp",
-      "!*.config.js",
-      "!src/core/anime/nexus/fingerprint.ts",
-      "!src/core/anime/miruro/decrypt.ts",
-      "!src/core/anime/1anime/decrypt.ts",
-      "!src/core/anime/miruro/utils.ts",
-      "!src/core/anime/animekai/decrypt.ts",
-      "!inspection-tool.ts"
+      "!*.config.js"
     ]
   },
   "formatter": {
