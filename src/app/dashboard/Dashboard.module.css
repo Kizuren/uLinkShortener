@@ -23,7 +23,8 @@
   gap: 1rem;
 }
 
-.securityButton, .adminButton {
+.securityButton,
+.adminButton {
   padding: 0.5rem 1rem;
   border-radius: 4px;
   font-weight: 500;
@@ -42,7 +43,8 @@
   color: white;
 }
 
-.securityButton:hover, .adminButton:hover {
+.securityButton:hover,
+.adminButton:hover {
   opacity: 0.9;
   transform: translateY(-2px);
 }
@@ -128,18 +130,18 @@
   .inputGroup {
     flex-direction: column;
   }
-  
+
   .dashboardHeader {
     flex-direction: column;
     align-items: flex-start;
     gap: 1rem;
   }
-  
+
   .actionButtons {
     width: 100%;
     justify-content: flex-start;
   }
-  
+
   .urlShortener,
   .linksSection {
     padding: 1rem;
@@ -150,12 +152,12 @@
   .dashboardContainer {
     padding: 1rem 0.5rem;
   }
-  
+
   .dashboardTitle {
     font-size: 1.5rem;
   }
-  
-  .securityButton, 
+
+  .securityButton,
   .adminButton {
     padding: 0.4rem 0.8rem;
     font-size: 0.9rem;

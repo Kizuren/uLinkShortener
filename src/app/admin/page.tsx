@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
@@ -13,7 +13,7 @@ export default function AdminDashboard() {
   const { data: session, status } = useSession();
   const router = useRouter();
   const { showToast } = useToast();
-  
+
   const [users, setUsers] = useState<User[]>([]);
   const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -23,7 +23,7 @@ export default function AdminDashboard() {
   const [isRecreatingStats, setIsRecreatingStats] = useState(false);
 
   useEffect(() => {
-    if (status === "unauthenticated" || (status === "authenticated" && !session?.user?.isAdmin)) {
+    if (status === 'unauthenticated' || (status === 'authenticated' && !session?.user?.isAdmin)) {
       router.push('/dashboard');
     }
   }, [status, session, router]);
@@ -41,12 +41,13 @@ export default function AdminDashboard() {
     }
 
     const term = searchTerm.toLowerCase();
-    const filtered = users.filter(user => 
-      user.account_id.toLowerCase().includes(term) ||
-      user.created_at.toLocaleString().toLowerCase().includes(term) ||
-      (user.is_admin ? "admin" : "user").includes(term)
+    const filtered = users.filter(
+      user =>
+        user.account_id.toLowerCase().includes(term) ||
+        user.created_at.toLocaleString().toLowerCase().includes(term) ||
+        (user.is_admin ? 'admin' : 'user').includes(term)
     );
-    
+
     setFilteredUsers(filtered);
   }, [searchTerm, users]);
 
@@ -54,20 +55,20 @@ export default function AdminDashboard() {
     try {
       setLoading(true);
       const response = await fetch('/api/admin/users');
-      
+
       if (!response.ok) {
         throw new Error('Failed to fetch users');
       }
-      
+
       const data = await response.json();
-      
+
       if (data.success) {
         const processedUsers = data.users.map((user: User) => ({
           account_id: user.account_id,
           is_admin: user.is_admin,
-          created_at: new Date(user.created_at)
+          created_at: new Date(user.created_at),
         }));
-        
+
         setUsers(processedUsers);
         setFilteredUsers(processedUsers);
       } else {
@@ -83,7 +84,7 @@ export default function AdminDashboard() {
 
   const handleDeleteUser = async () => {
     if (!userToDelete) return;
-    
+
     try {
       const response = await fetch('/api/admin/users', {
         method: 'DELETE',
@@ -92,9 +93,9 @@ export default function AdminDashboard() {
         },
         body: JSON.stringify({ account_id: userToDelete }),
       });
-      
+
       const data = await response.json();
-      
+
       if (response.ok && data.success) {
         showToast('User deleted successfully', 'success');
         setUsers(prevUsers => prevUsers.filter(user => user.account_id !== userToDelete));
@@ -119,11 +120,11 @@ export default function AdminDashboard() {
     try {
       setIsRecreatingStats(true);
       const response = await fetch('/api/admin/statistics/rebuild', {
-        method: 'POST'
+        method: 'POST',
       });
-      
+
       const data = await response.json();
-      
+
       if (response.ok && data.success) {
         showToast('Statistics recreated successfully', 'success');
       } else {
@@ -142,16 +143,14 @@ export default function AdminDashboard() {
       const response = await fetch(`/api/admin/users/${accountId}/admin`, {
         method: 'POST',
       });
-      
+
       const data = await response.json();
-      
+
       if (response.ok && data.success) {
         showToast(data.message, 'success');
-        setUsers(prevUsers => 
-          prevUsers.map(user => 
-            user.account_id === accountId 
-              ? { ...user, is_admin: data.is_admin } 
-              : user
+        setUsers(prevUsers =>
+          prevUsers.map(user =>
+            user.account_id === accountId ? { ...user, is_admin: data.is_admin } : user
           )
         );
       } else {
@@ -163,11 +162,11 @@ export default function AdminDashboard() {
     }
   };
 
-  if (status === "loading" || loading) {
+  if (status === 'loading' || loading) {
     return <div className={styles.loading}>Loading...</div>;
   }
 
-  if (status === "unauthenticated" || (status === "authenticated" && !session?.user?.isAdmin)) {
+  if (status === 'unauthenticated' || (status === 'authenticated' && !session?.user?.isAdmin)) {
     return null;
   }
 
@@ -176,11 +175,11 @@ export default function AdminDashboard() {
       <header className={styles.adminHeader}>
         <h1 className={styles.adminTitle}>Admin Dashboard</h1>
         <div className={styles.actionButtons}>
-          <Link href="/dashboard">
+          <Link href='/dashboard'>
             <button className={styles.dashboardButton}>Back to Dashboard</button>
           </Link>
-          <button 
-            className={styles.statsButton} 
+          <button
+            className={styles.statsButton}
             onClick={handleRecreateStatistics}
             disabled={isRecreatingStats}
           >
@@ -194,17 +193,17 @@ export default function AdminDashboard() {
           <h2>Manage Users</h2>
           <div className={styles.searchContainer}>
             <input
-              type="text"
-              placeholder="Search users..."
+              type='text'
+              placeholder='Search users...'
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={e => setSearchTerm(e.target.value)}
               className={styles.searchInput}
             />
             {searchTerm && (
-              <button 
+              <button
                 className={styles.clearSearchButton}
                 onClick={() => setSearchTerm('')}
-                title="Clear search"
+                title='Clear search'
               >
                 ✕
               </button>
@@ -228,29 +227,29 @@ export default function AdminDashboard() {
                 </tr>
               </thead>
               <tbody>
-                {filteredUsers.map((user) => (
+                {filteredUsers.map(user => (
                   <tr key={user.account_id}>
                     <td>{user.account_id}</td>
                     <td>{user.created_at.toLocaleString()}</td>
                     <td>{user.is_admin ? 'Admin' : 'User'}</td>
                     <td className={styles.actions}>
                       <Link href={`/admin/user/${user.account_id}`}>
-                        <button className={styles.viewButton}>
-                          View Details
-                        </button>
+                        <button className={styles.viewButton}>View Details</button>
                       </Link>
-                      
+
                       {user.account_id !== session?.user?.accountId && (
-                        <button 
-                          className={user.is_admin ? styles.removeAdminButton : styles.makeAdminButton}
+                        <button
+                          className={
+                            user.is_admin ? styles.removeAdminButton : styles.makeAdminButton
+                          }
                           onClick={() => handleToggleAdminStatus(user.account_id)}
                         >
                           {user.is_admin ? 'Remove Admin' : 'Make Admin'}
                         </button>
                       )}
-                      
+
                       {!user.is_admin && (
-                        <button 
+                        <button
                           className={styles.deleteButton}
                           onClick={() => confirmDeleteUser(user.account_id)}
                         >
@@ -266,10 +265,10 @@ export default function AdminDashboard() {
         )}
       </section>
 
-      <ConfirmModal 
+      <ConfirmModal
         isOpen={isDeleteModalOpen}
-        title="Delete User"
-        message="Are you sure you want to delete this user? This will permanently remove their account and all associated data including links and analytics. This action cannot be undone."
+        title='Delete User'
+        message='Are you sure you want to delete this user? This will permanently remove their account and all associated data including links and analytics. This action cannot be undone.'
         onConfirm={handleDeleteUser}
         onCancel={() => setIsDeleteModalOpen(false)}
       />

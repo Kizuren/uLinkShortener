@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useState, useEffect, useRef } from 'react';
 import { useParams, useRouter } from 'next/navigation';
@@ -17,7 +17,7 @@ export default function LinkDetailPage() {
   const router = useRouter();
   const { showToast } = useToast();
   const shortId = params.shortId as string;
-  
+
   const [link, setLink] = useState<LinkType | null>(null);
   const [targetUrl, setTargetUrl] = useState('');
   const [isEditing, setIsEditing] = useState(false);
@@ -33,21 +33,21 @@ export default function LinkDetailPage() {
   const [analyticsToDelete, setAnalyticsToDelete] = useState<string>('');
   const [isLoadingStats, setIsLoadingStats] = useState(true);
   const isRedirecting = useRef(false);
-  
+
   // Stats data
   const [browserStats, setBrowserStats] = useState<StatItem[]>([]);
   const [osStats, setOsStats] = useState<StatItem[]>([]);
   const [countryStats, setCountryStats] = useState<StatItem[]>([]);
   const [ipVersionStats, setIpVersionStats] = useState<StatItem[]>([]);
 
-  function isValidUrl(urlStr: string) : boolean {
-    if(urlStr.trim() === "") {
+  function isValidUrl(urlStr: string): boolean {
+    if (urlStr.trim() === '') {
       return false;
     }
-  
+
     try {
       const parsedUrl = new URL(urlStr);
-      return parsedUrl.protocol !== "" && parsedUrl.hostname !== "";
+      return parsedUrl.protocol !== '' && parsedUrl.hostname !== '';
     } catch {
       return false;
     }
@@ -60,10 +60,10 @@ export default function LinkDetailPage() {
       }, 10);
     }
   }, [isEditing]);
-  
+
   useEffect(() => {
     if (isRedirecting.current) return;
-    
+
     async function fetchLinkData() {
       try {
         const response = await fetch(`/api/link?shortId=${shortId}`);
@@ -73,7 +73,7 @@ export default function LinkDetailPage() {
           router.push('/dashboard');
           return;
         }
-        
+
         const data = await response.json();
         if (data.success && data.link) {
           setLink(data.link);
@@ -91,13 +91,13 @@ export default function LinkDetailPage() {
         setIsLoading(false);
       }
     }
-    
+
     fetchLinkData();
   }, [shortId, router, showToast]);
-  
+
   useEffect(() => {
     if (!link) return;
-    
+
     async function fetchAllAnalytics() {
       try {
         const response = await fetch(`/api/analytics?link_id=${shortId}&all=true`);
@@ -105,7 +105,7 @@ export default function LinkDetailPage() {
           showToast('Failed to load complete analytics data', 'error');
           return;
         }
-        
+
         const data = await response.json();
         if (data.success) {
           setAllAnalytics(data.analytics);
@@ -115,21 +115,23 @@ export default function LinkDetailPage() {
         showToast('An error occurred while loading complete analytics data', 'error');
       }
     }
-    
+
     fetchAllAnalytics();
   }, [link, shortId, showToast]);
-  
+
   useEffect(() => {
     if (!link) return;
-    
+
     async function fetchPaginatedAnalytics() {
       try {
-        const response = await fetch(`/api/analytics?link_id=${shortId}&page=${page}&limit=${limit}`);
+        const response = await fetch(
+          `/api/analytics?link_id=${shortId}&page=${page}&limit=${limit}`
+        );
         if (!response.ok) {
           showToast('Failed to load analytics page', 'error');
           return;
         }
-        
+
         const data = await response.json();
         if (data.success) {
           setAnalytics(data.analytics);
@@ -138,13 +140,13 @@ export default function LinkDetailPage() {
         showToast('An error occurred while loading analytics page', 'error');
       }
     }
-    
+
     fetchPaginatedAnalytics();
   }, [link, shortId, page, limit, showToast]);
-  
+
   useEffect(() => {
     if (!link || allAnalytics.length === 0) return;
-    
+
     async function generateStats() {
       setIsLoadingStats(true);
       try {
@@ -154,78 +156,86 @@ export default function LinkDetailPage() {
           acc[browser] = (acc[browser] || 0) + 1;
           return acc;
         }, {});
-        
+
         // OS stats
         const oses = allAnalytics.reduce((acc: Record<string, number>, item) => {
           const os = item.platform || 'Unknown';
           acc[os] = (acc[os] || 0) + 1;
           return acc;
         }, {});
-        
+
         // Country stats
         const countries = allAnalytics.reduce((acc: Record<string, number>, item) => {
           const country = item.country || 'Unknown';
           acc[country] = (acc[country] || 0) + 1;
           return acc;
         }, {});
-        
+
         // IP version stats
         const ipVersions = allAnalytics.reduce((acc: Record<string, number>, item) => {
           const ipVersion = item.ip_version || 'Unknown';
           acc[ipVersion] = (acc[ipVersion] || 0) + 1;
           return acc;
         }, {});
-        
+
         // Convert to StatItem[] and sort by count
-        setBrowserStats(Object.entries(browsers)
-          .map(([id, count]) => ({ id, count }))
-          .sort((a, b) => b.count - a.count));
-          
-        setOsStats(Object.entries(oses)
-          .map(([id, count]) => ({ id, count }))
-          .sort((a, b) => b.count - a.count));
-          
-        setCountryStats(Object.entries(countries)
-          .map(([id, count]) => ({ id, count }))
-          .sort((a, b) => b.count - a.count));
-          
-        setIpVersionStats(Object.entries(ipVersions)
-          .map(([id, count]) => ({ id, count }))
-          .sort((a, b) => b.count - a.count));
+        setBrowserStats(
+          Object.entries(browsers)
+            .map(([id, count]) => ({ id, count }))
+            .sort((a, b) => b.count - a.count)
+        );
+
+        setOsStats(
+          Object.entries(oses)
+            .map(([id, count]) => ({ id, count }))
+            .sort((a, b) => b.count - a.count)
+        );
+
+        setCountryStats(
+          Object.entries(countries)
+            .map(([id, count]) => ({ id, count }))
+            .sort((a, b) => b.count - a.count)
+        );
+
+        setIpVersionStats(
+          Object.entries(ipVersions)
+            .map(([id, count]) => ({ id, count }))
+            .sort((a, b) => b.count - a.count)
+        );
       } catch {
         showToast('An error occurred while processing analytics data', 'error');
       } finally {
         setIsLoadingStats(false);
       }
     }
-    
+
     generateStats();
   }, [allAnalytics, link, showToast]);
-  
+
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
   };
-  
+
   const handleEditLink = async () => {
     if (!isValidUrl(targetUrl)) {
       showToast('Please enter a valid URL', 'error');
       return;
     }
-    
+
     try {
       const response = await fetch(`/api/link`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ 
+        body: JSON.stringify({
           shortId: shortId,
-          target_url: targetUrl 
+          target_url: targetUrl,
         }),
       });
-      
+
       const data = await response.json();
-      
+
       if (data.success) {
         showToast('Link updated successfully', 'success');
         setIsEditing(false);
@@ -233,7 +243,7 @@ export default function LinkDetailPage() {
           setLink({
             ...link,
             target_url: targetUrl,
-            last_modified: new Date()
+            last_modified: new Date(),
           });
         }
       } else {
@@ -243,7 +253,7 @@ export default function LinkDetailPage() {
       showToast('An error occurred while updating the link', 'error');
     }
   };
-  
+
   const handleDeleteAnalytics = async () => {
     try {
       const response = await fetch('/api/analytics', {
@@ -251,19 +261,19 @@ export default function LinkDetailPage() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ 
+        body: JSON.stringify({
           link_id: shortId,
-          analytics_id: analyticsToDelete
+          analytics_id: analyticsToDelete,
         }),
       });
-      
+
       const data = await response.json();
-      
+
       if (data.success) {
         showToast('Analytics entry deleted successfully', 'success');
-        
+
         setAnalytics(analytics.filter(item => item._id?.toString() !== analyticsToDelete));
-        
+
         setTotalAnalytics(prev => prev - 1);
       } else {
         showToast(data.message || 'Failed to delete analytics entry', 'error');
@@ -275,7 +285,7 @@ export default function LinkDetailPage() {
       setAnalyticsToDelete('');
     }
   };
-  
+
   const handleDeleteAllAnalytics = async () => {
     try {
       const response = await fetch('/api/analytics', {
@@ -283,17 +293,17 @@ export default function LinkDetailPage() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ 
+        body: JSON.stringify({
           link_id: shortId,
-          delete_all: true
+          delete_all: true,
         }),
       });
-      
+
       const data = await response.json();
-      
+
       if (data.success) {
         showToast('All analytics entries deleted successfully', 'success');
-        
+
         setAnalytics([]);
         setTotalAnalytics(0);
         setBrowserStats([]);
@@ -309,7 +319,7 @@ export default function LinkDetailPage() {
       setShowDeleteAllModal(false);
     }
   };
-  
+
   if (isLoading) {
     return (
       <div className={styles.loadingContainer}>
@@ -318,16 +328,16 @@ export default function LinkDetailPage() {
       </div>
     );
   }
-  
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
         <h1 className={styles.title}>Link Details</h1>
-        <Link href="/dashboard" className={styles.backLink}>
+        <Link href='/dashboard' className={styles.backLink}>
           Back to Dashboard
         </Link>
       </div>
-      
+
       <div className={styles.linkInfo}>
         <div className={styles.linkCard}>
           <h2>Link Information</h2>
@@ -336,20 +346,20 @@ export default function LinkDetailPage() {
               <span className={styles.label}>Short ID:</span>
               <span className={styles.value}>{shortId}</span>
             </div>
-            
+
             <div className={styles.targetUrlHeader}>
               <div className={styles.linkDetailItem}>
                 <span className={styles.label}>Short URL:</span>
-                <a 
-                  href={`${window.location.origin}/l/${shortId}`} 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
+                <a
+                  href={`${window.location.origin}/l/${shortId}`}
+                  target='_blank'
+                  rel='noopener noreferrer'
                   className={styles.shortUrl}
                 >
                   {`${window.location.origin}/l/${shortId}`}
                 </a>
               </div>
-              <button 
+              <button
                 className={styles.defaultButton}
                 onClick={() => {
                   navigator.clipboard.writeText(`${window.location.origin}/l/${shortId}`);
@@ -359,37 +369,34 @@ export default function LinkDetailPage() {
                 Copy
               </button>
             </div>
-            
+
             <div className={styles.linkDetailItem}>
               <span className={styles.label}>Created:</span>
               <span className={styles.value}>
                 {link ? new Date(link.created_at).toLocaleString() : ''}
               </span>
             </div>
-            
+
             <div className={styles.linkDetailItem}>
               <span className={styles.label}>Last Modified:</span>
               <span className={styles.value}>
                 {link ? new Date(link.last_modified).toLocaleString() : ''}
               </span>
             </div>
-            
+
             <div className={styles.targetUrlSection}>
               <div className={styles.targetUrlHeader}>
                 <span className={styles.label}>Target URL:</span>
                 {!isEditing && (
-                  <button 
-                    className={styles.defaultButton}
-                    onClick={() => setIsEditing(true)}
-                  >
+                  <button className={styles.defaultButton} onClick={() => setIsEditing(true)}>
                     Edit
                   </button>
                 )}
               </div>
-              
+
               {isEditing ? (
-                <form 
-                  onSubmit={(e) => {
+                <form
+                  onSubmit={e => {
                     e.preventDefault();
                     handleEditLink();
                   }}
@@ -397,15 +404,15 @@ export default function LinkDetailPage() {
                 >
                   <input
                     ref={inputRef}
-                    type="url"
+                    type='url'
                     value={targetUrl}
-                    onChange={(e) => setTargetUrl(e.target.value)}
+                    onChange={e => setTargetUrl(e.target.value)}
                     className={styles.urlInput}
-                    placeholder="https://example.com"
+                    placeholder='https://example.com'
                   />
                   <div className={styles.editActions}>
-                    <button 
-                      type="button"
+                    <button
+                      type='button'
                       className={styles.cancelButton}
                       onClick={() => {
                         setIsEditing(false);
@@ -414,19 +421,16 @@ export default function LinkDetailPage() {
                     >
                       Cancel
                     </button>
-                    <button 
-                      type="submit"
-                      className={styles.saveButton}
-                    >
+                    <button type='submit' className={styles.saveButton}>
                       Save
                     </button>
                   </div>
                 </form>
               ) : (
-                <a 
-                  href={link?.target_url} 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
+                <a
+                  href={link?.target_url}
+                  target='_blank'
+                  rel='noopener noreferrer'
                   className={styles.targetUrl}
                 >
                   {link?.target_url}
@@ -436,75 +440,55 @@ export default function LinkDetailPage() {
           </div>
         </div>
       </div>
-      
+
       <div className={styles.analyticsSection}>
         <div className={styles.analyticsHeader}>
           <h2>Analytics</h2>
-          <span className={styles.totalClicks}>
-            Total Clicks: {totalAnalytics}
-          </span>
+          <span className={styles.totalClicks}>Total Clicks: {totalAnalytics}</span>
           {totalAnalytics > 0 && (
-            <button 
-              className={styles.deleteAllButton}
-              onClick={() => setShowDeleteAllModal(true)}
-            >
+            <button className={styles.deleteAllButton} onClick={() => setShowDeleteAllModal(true)}>
               Delete All Analytics
             </button>
           )}
         </div>
-        
+
         {totalAnalytics > 0 ? (
           <>
             <div className={styles.graphs}>
               <div className={styles.graphCard}>
                 <h3>Browsers</h3>
-                <Graph 
-                  type="doughnut" 
-                  data={browserStats} 
-                  loading={isLoadingStats} 
-                  height={200}
-                />
+                <Graph type='doughnut' data={browserStats} loading={isLoadingStats} height={200} />
               </div>
-              
+
               <div className={styles.graphCard}>
                 <h3>Operating Systems</h3>
-                <Graph 
-                  type="doughnut" 
-                  data={osStats} 
-                  loading={isLoadingStats} 
-                  height={200}
-                />
+                <Graph type='doughnut' data={osStats} loading={isLoadingStats} height={200} />
               </div>
-              
+
               <div className={styles.graphCard}>
                 <h3>Countries</h3>
-                <Graph 
-                  type="doughnut" 
-                  data={countryStats} 
-                  loading={isLoadingStats} 
-                  height={200}
-                />
+                <Graph type='doughnut' data={countryStats} loading={isLoadingStats} height={200} />
               </div>
-              
+
               <div className={styles.graphCard}>
                 <h3>IP Versions</h3>
-                <Graph 
-                  type="doughnut" 
-                  data={ipVersionStats} 
-                  loading={isLoadingStats} 
+                <Graph
+                  type='doughnut'
+                  data={ipVersionStats}
+                  loading={isLoadingStats}
                   height={200}
                 />
               </div>
             </div>
-            
-            <AnalyticsTable 
-              analytics={analytics} 
+
+            <AnalyticsTable
+              analytics={analytics}
               allAnalytics={allAnalytics}
               totalItems={totalAnalytics}
               currentPage={page}
               itemsPerPage={limit}
               onPageChange={handlePageChange}
-              onDeleteClick={(id) => {
+              onDeleteClick={id => {
                 setAnalyticsToDelete(id);
                 setShowDeleteModal(true);
               }}
@@ -516,28 +500,28 @@ export default function LinkDetailPage() {
           </div>
         )}
       </div>
-      
+
       {/* Confirm Delete Modal */}
       <ConfirmModal
         isOpen={showDeleteModal}
-        title="Delete Analytics Entry"
-        message="Are you sure you want to delete this analytics entry? This action cannot be undone."
-        confirmLabel="Delete"
-        cancelLabel="Cancel"
+        title='Delete Analytics Entry'
+        message='Are you sure you want to delete this analytics entry? This action cannot be undone.'
+        confirmLabel='Delete'
+        cancelLabel='Cancel'
         onConfirm={handleDeleteAnalytics}
         onCancel={() => {
           setShowDeleteModal(false);
           setAnalyticsToDelete('');
         }}
       />
-      
+
       {/* Confirm Delete All Modal */}
       <ConfirmModal
         isOpen={showDeleteAllModal}
-        title="Delete All Analytics"
-        message="Are you sure you want to delete all analytics for this link? This action cannot be undone."
-        confirmLabel="Delete All"
-        cancelLabel="Cancel"
+        title='Delete All Analytics'
+        message='Are you sure you want to delete all analytics for this link? This action cannot be undone.'
+        confirmLabel='Delete All'
+        cancelLabel='Cancel'
         onConfirm={handleDeleteAllAnalytics}
         onCancel={() => setShowDeleteAllModal(false)}
       />

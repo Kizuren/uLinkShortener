@@ -23,7 +23,8 @@
   gap: 1rem;
 }
 
-.backButton, .deleteButton {
+.backButton,
+.deleteButton {
   padding: 0.5rem 1rem;
   border-radius: 4px;
   font-weight: 500;
@@ -42,12 +43,15 @@
   color: white;
 }
 
-.backButton:hover, .deleteButton:hover {
+.backButton:hover,
+.deleteButton:hover {
   opacity: 0.9;
   transform: translateY(-2px);
 }
 
-.userInfo, .linksSection, .sessionsSection {
+.userInfo,
+.linksSection,
+.sessionsSection {
   background-color: var(--card-bg);
   border-radius: 8px;
   padding: 1.5rem;
@@ -167,7 +171,7 @@
     align-items: flex-start;
     gap: 1rem;
   }
-  
+
   .actionButtons {
     width: 100%;
   }

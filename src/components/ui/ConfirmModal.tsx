@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useEffect, useRef } from 'react';
 import styles from './ConfirmModal.module.css';
@@ -17,10 +17,10 @@ export default function ConfirmModal({
   isOpen,
   title,
   message,
-  confirmLabel = "Delete",
-  cancelLabel = "Cancel",
+  confirmLabel = 'Delete',
+  cancelLabel = 'Cancel',
   onConfirm,
-  onCancel
+  onCancel,
 }: ConfirmModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
 
@@ -29,12 +29,12 @@ export default function ConfirmModal({
     if (isOpen) {
       // Prevent scrolling of background content
       document.body.style.overflow = 'hidden';
-      
+
       // Auto focus the first button
       const focusableElements = modalRef.current?.querySelectorAll(
         'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
       );
-      
+
       if (focusableElements && focusableElements.length > 0) {
         (focusableElements[0] as HTMLElement).focus();
       }
@@ -45,7 +45,7 @@ export default function ConfirmModal({
           onCancel();
         }
       };
-      
+
       document.addEventListener('keydown', handleKeyDown);
       return () => {
         document.body.style.overflow = '';
@@ -58,29 +58,25 @@ export default function ConfirmModal({
 
   return (
     <div className={styles.modalOverlay} onClick={onCancel}>
-      <div 
-        className={styles.modalContent} 
+      <div
+        className={styles.modalContent}
         onClick={e => e.stopPropagation()}
         ref={modalRef}
-        role="dialog"
-        aria-labelledby="modal-title"
-        aria-modal="true"
+        role='dialog'
+        aria-labelledby='modal-title'
+        aria-modal='true'
       >
-        <h3 id="modal-title" className={styles.modalTitle}>{title}</h3>
+        <h3 id='modal-title' className={styles.modalTitle}>
+          {title}
+        </h3>
         <div className={styles.modalBody}>
           <p>{message}</p>
         </div>
         <div className={styles.modalFooter}>
-          <button 
-            className={styles.cancelButton} 
-            onClick={onCancel}
-          >
+          <button className={styles.cancelButton} onClick={onCancel}>
             {cancelLabel}
           </button>
-          <button 
-            className={styles.confirmButton} 
-            onClick={onConfirm}
-          >
+          <button className={styles.confirmButton} onClick={onConfirm}>
             {confirmLabel}
           </button>
         </div>

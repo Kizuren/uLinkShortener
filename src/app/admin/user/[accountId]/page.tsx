@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
@@ -17,49 +17,49 @@ export default function UserDetailPage() {
   const { data: session, status } = useSession();
   const { showToast } = useToast();
   const accountId = params.accountId as string;
-  
+
   const [user, setUser] = useState<User | null>(null);
   const [links, setLinks] = useState([]);
   const [sessions, setSessions] = useState<SessionInfo[]>([]);
   const [loading, setLoading] = useState(true);
   const [revoking, setRevoking] = useState<string | null>(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  
+
   useEffect(() => {
-    if (status === "unauthenticated" || (status === "authenticated" && !session?.user?.isAdmin)) {
+    if (status === 'unauthenticated' || (status === 'authenticated' && !session?.user?.isAdmin)) {
       router.push('/dashboard');
     }
   }, [status, session, router]);
-  
+
   useEffect(() => {
-    if (status === "authenticated" && session?.user?.isAdmin) {
+    if (status === 'authenticated' && session?.user?.isAdmin) {
       fetchUserData();
     }
   }, [status, session, accountId]);
-  
+
   const fetchUserData = async () => {
     try {
       setLoading(true);
       const userResponse = await fetch(`/api/admin/users/${accountId}`);
-      
+
       if (!userResponse.ok) {
         throw new Error('Failed to fetch user details');
       }
-      
+
       const userData = await userResponse.json();
       if (userData.success) {
         setUser(userData.user);
-        
+
         const linksResponse = await fetch(`/api/admin/users/${accountId}/links`);
         const linksData = await linksResponse.json();
-        
+
         if (linksResponse.ok && linksData.success) {
           setLinks(linksData.links);
         }
-        
+
         const sessionsResponse = await fetch(`/api/admin/users/${accountId}/sessions`);
         const sessionsData = await sessionsResponse.json();
-        
+
         if (sessionsResponse.ok && sessionsData.success) {
           setSessions(sessionsData.sessions);
         }
@@ -75,24 +75,22 @@ export default function UserDetailPage() {
       setLoading(false);
     }
   };
-  
+
   const handleRevokeSession = async (sessionId: string) => {
     try {
       setRevoking(sessionId);
-      
+
       const response = await fetch(`/api/admin/users/${accountId}/sessions/revoke`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ sessionId, accountId })
+        body: JSON.stringify({ sessionId, accountId }),
       });
-      
+
       const data = await response.json();
-      
+
       if (response.ok && data.success) {
         showToast('Session revoked successfully', 'success');
-        setSessions(prevSessions => 
-          prevSessions.filter(s => s.id !== sessionId)
-        );
+        setSessions(prevSessions => prevSessions.filter(s => s.id !== sessionId));
       } else {
         showToast(data.message || 'Failed to revoke session', 'error');
       }
@@ -103,7 +101,7 @@ export default function UserDetailPage() {
       setRevoking(null);
     }
   };
-  
+
   const handleDeleteUser = async () => {
     try {
       const response = await fetch('/api/admin/users', {
@@ -113,9 +111,9 @@ export default function UserDetailPage() {
         },
         body: JSON.stringify({ account_id: accountId }),
       });
-      
+
       const data = await response.json();
-      
+
       if (response.ok && data.success) {
         showToast('User deleted successfully', 'success');
         router.push('/admin');
@@ -134,34 +132,31 @@ export default function UserDetailPage() {
     const date = new Date(dateString);
     return date.toLocaleString();
   };
-  
-  if (status === "loading" || loading) {
+
+  if (status === 'loading' || loading) {
     return <div className={styles.loading}>Loading user details...</div>;
   }
-  
+
   if (!user) {
     return <div className={styles.error}>User not found</div>;
   }
-  
+
   return (
     <div className={styles.container}>
       <header className={styles.header}>
         <h1 className={styles.title}>User Details</h1>
         <div className={styles.actionButtons}>
-          <Link href="/admin">
+          <Link href='/admin'>
             <button className={styles.backButton}>Back to Admin</button>
           </Link>
           {!user.is_admin && (
-            <button 
-              className={styles.deleteButton}
-              onClick={() => setIsDeleteModalOpen(true)}
-            >
+            <button className={styles.deleteButton} onClick={() => setIsDeleteModalOpen(true)}>
               Delete User
             </button>
           )}
         </div>
       </header>
-      
+
       <section className={styles.userInfo}>
         <h2>Account Information</h2>
         <div className={styles.infoCard}>
@@ -179,7 +174,7 @@ export default function UserDetailPage() {
           </div>
         </div>
       </section>
-      
+
       <section className={styles.linksSection}>
         <h2>User Links</h2>
         {links.length === 0 ? (
@@ -188,7 +183,7 @@ export default function UserDetailPage() {
           <AdminLinkTable links={links} accountId={user.account_id} onLinkDeleted={fetchUserData} />
         )}
       </section>
-      
+
       <section className={styles.sessionsSection}>
         <h2>Active Sessions</h2>
         {sessions.length === 0 ? (
@@ -206,7 +201,7 @@ export default function UserDetailPage() {
                 </tr>
               </thead>
               <tbody>
-                {sessions.map((s) => (
+                {sessions.map(s => (
                   <tr key={s.id}>
                     <td>{s.userAgent.split(' ').slice(0, 3).join(' ')}</td>
                     <td>{s.ipAddress}</td>
@@ -228,10 +223,10 @@ export default function UserDetailPage() {
           </div>
         )}
       </section>
-      
-      <ConfirmModal 
+
+      <ConfirmModal
         isOpen={isDeleteModalOpen}
-        title="Delete User"
+        title='Delete User'
         message={`Are you sure you want to delete user ${accountId}? This will permanently remove their account and all associated data including links and analytics. This action cannot be undone.`}
         onConfirm={handleDeleteUser}
         onCancel={() => setIsDeleteModalOpen(false)}

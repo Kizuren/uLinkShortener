@@ -23,7 +23,8 @@
   gap: 1rem;
 }
 
-.dashboardButton, .statsButton {
+.dashboardButton,
+.statsButton {
   padding: 0.5rem 1rem;
   border-radius: 4px;
   font-weight: 500;
@@ -42,7 +43,8 @@
   color: white;
 }
 
-.dashboardButton:hover, .statsButton:hover {
+.dashboardButton:hover,
+.statsButton:hover {
   opacity: 0.9;
   transform: translateY(-2px);
 }
@@ -132,7 +134,8 @@
   gap: 0.5rem;
 }
 
-.viewButton, .deleteButton {
+.viewButton,
+.deleteButton {
   padding: 0.4rem 0.6rem;
   border-radius: 4px;
   font-size: 0.8rem;
@@ -152,7 +155,8 @@
   color: white;
 }
 
-.viewButton:hover, .deleteButton:hover {
+.viewButton:hover,
+.deleteButton:hover {
   opacity: 0.9;
 }
 
@@ -172,7 +176,8 @@
   font-size: 1rem;
 }
 
-.makeAdminButton, .removeAdminButton {
+.makeAdminButton,
+.removeAdminButton {
   padding: 0.4rem 0.6rem;
   border-radius: 4px;
   font-size: 0.8rem;
@@ -193,7 +198,8 @@
   color: white;
 }
 
-.makeAdminButton:hover, .removeAdminButton:hover {
+.makeAdminButton:hover,
+.removeAdminButton:hover {
   opacity: 0.9;
 }
 
@@ -203,25 +209,25 @@
     align-items: flex-start;
     gap: 1rem;
   }
-  
+
   .actionButtons {
     width: 100%;
   }
-  
+
   .sectionHeader {
     flex-direction: column;
     align-items: flex-start;
     gap: 1rem;
   }
-  
+
   .searchContainer {
     width: 100%;
   }
-  
+
   .searchInput {
     width: 100%;
   }
-  
+
   .actions {
     flex-direction: column;
   }

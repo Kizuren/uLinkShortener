@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
@@ -15,7 +15,7 @@ interface LinkData {
 
 interface LinkTableProps {
   links: LinkData[];
-  accountId: string
+  accountId: string;
   onLinkDeleted: () => void;
 }
 
@@ -38,19 +38,21 @@ export default function AdminLinkTable({ links, accountId, onLinkDeleted }: Link
     }
 
     const term = searchTerm.toLowerCase();
-    const filtered = links.filter(link => 
-      link.short_id.toLowerCase().includes(term) ||
-      link.target_url.toLowerCase().includes(term) ||
-      new Date(link.created_at).toLocaleString().toLowerCase().includes(term) ||
-      new Date(link.last_modified).toLocaleString().toLowerCase().includes(term)
+    const filtered = links.filter(
+      link =>
+        link.short_id.toLowerCase().includes(term) ||
+        link.target_url.toLowerCase().includes(term) ||
+        new Date(link.created_at).toLocaleString().toLowerCase().includes(term) ||
+        new Date(link.last_modified).toLocaleString().toLowerCase().includes(term)
     );
-    
+
     setFilteredLinks(filtered);
   }, [searchTerm, links]);
 
   const copyToClipboard = (shortId: string) => {
     const fullUrl = `${window.location.origin}/l/${shortId}`;
-    navigator.clipboard.writeText(fullUrl)
+    navigator.clipboard
+      .writeText(fullUrl)
       .then(() => {
         showToast('Link copied to clipboard!', 'success');
       })
@@ -72,7 +74,7 @@ export default function AdminLinkTable({ links, accountId, onLinkDeleted }: Link
 
   const handleDeleteLink = async () => {
     if (!linkToDelete) return;
-    
+
     try {
       setDeletingId(linkToDelete);
       const response = await fetch(`/api/admin/users/${accountId}/links/${linkToDelete}`, {
@@ -82,9 +84,9 @@ export default function AdminLinkTable({ links, accountId, onLinkDeleted }: Link
         },
         body: JSON.stringify({ shortId: linkToDelete }),
       });
-      
+
       const data = await response.json();
-      
+
       if (response.ok && data.success) {
         showToast('Link deleted successfully!', 'success');
         if (onLinkDeleted) onLinkDeleted();
@@ -114,17 +116,17 @@ export default function AdminLinkTable({ links, accountId, onLinkDeleted }: Link
     <div className={styles.tableWrapper}>
       <div className={styles.searchContainer}>
         <input
-          type="text"
-          placeholder="Search links..."
+          type='text'
+          placeholder='Search links...'
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={e => setSearchTerm(e.target.value)}
           className={styles.searchInput}
         />
         {searchTerm && (
-          <button 
+          <button
             className={styles.clearSearchButton}
             onClick={() => setSearchTerm('')}
-            title="Clear search"
+            title='Clear search'
           >
             ✕
           </button>
@@ -150,10 +152,10 @@ export default function AdminLinkTable({ links, accountId, onLinkDeleted }: Link
               </tr>
             </thead>
             <tbody>
-              {filteredLinks.map((link) => (
+              {filteredLinks.map(link => (
                 <tr key={link.short_id}>
                   <td className={styles.shortLinkCell}>
-                    <Link 
+                    <Link
                       href={`/admin/user/${accountId}/links/${link.short_id}`}
                       className={styles.shortLink}
                     >
@@ -161,25 +163,25 @@ export default function AdminLinkTable({ links, accountId, onLinkDeleted }: Link
                     </Link>
                   </td>
                   <td className={styles.targetUrl} title={link.target_url}>
-                    <a href={link.target_url} target="_blank" rel="noopener noreferrer">
+                    <a href={link.target_url} target='_blank' rel='noopener noreferrer'>
                       {truncateUrl(link.target_url)}
                     </a>
                   </td>
                   <td className={styles.hideOnMobile}>{formatDate(link.created_at)}</td>
                   <td className={styles.hideOnMobile}>{formatDate(link.last_modified)}</td>
                   <td className={styles.actions}>
-                    <button 
+                    <button
                       className={styles.copyButton}
                       onClick={() => copyToClipboard(link.short_id)}
-                      title="Copy full short URL to clipboard"
+                      title='Copy full short URL to clipboard'
                     >
                       Copy
                     </button>
-                    <button 
+                    <button
                       className={styles.deleteButton}
                       onClick={() => confirmDelete(link.short_id)}
                       disabled={deletingId === link.short_id}
-                      title="Delete this link"
+                      title='Delete this link'
                     >
                       {deletingId === link.short_id ? 'Deleting...' : 'Delete'}
                     </button>
@@ -191,10 +193,10 @@ export default function AdminLinkTable({ links, accountId, onLinkDeleted }: Link
         </div>
       )}
 
-      <ConfirmModal 
+      <ConfirmModal
         isOpen={isDeleteModalOpen}
-        title="Delete Link"
-        message="Are you sure you want to delete this link? This action cannot be undone."
+        title='Delete Link'
+        message='Are you sure you want to delete this link? This action cannot be undone.'
         onConfirm={handleDeleteLink}
         onCancel={cancelDelete}
       />

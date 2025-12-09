@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useEffect, useState, useRef } from 'react';
 import {
@@ -62,7 +62,7 @@ export default function Graph({
   loading = false,
   height = 200,
   maxItems = 8,
-  colors = defaultColors
+  colors = defaultColors,
 }: GraphProps) {
   const [chartLabels, setChartLabels] = useState<string[]>([]);
   const [chartValues, setChartValues] = useState<number[]>([]);
@@ -78,14 +78,14 @@ export default function Graph({
     const processedData = [...data];
     let labels: string[] = [];
     let values: number[] = [];
-    
+
     if (processedData.length > maxItems) {
       const topItems = processedData.slice(0, maxItems - 1);
       const others = processedData.slice(maxItems - 1);
-      
+
       labels = topItems.map(item => item.id);
       values = topItems.map(item => item.count);
-      
+
       const othersSum = others.reduce((sum, item) => sum + item.count, 0);
       labels.push('Others');
       values.push(othersSum);
@@ -106,22 +106,22 @@ export default function Graph({
         chartRef.current.update();
       }
     });
-    
+
     const currentContainer = containerRef.current;
-  
+
     if (currentContainer) {
       resizeObserver.observe(currentContainer);
     }
-    
+
     // Also handle window resize
     const handleResize = () => {
       if (chartRef.current) {
         chartRef.current.update();
       }
     };
-    
+
     window.addEventListener('resize', handleResize);
-    
+
     return () => {
       if (currentContainer) {
         resizeObserver.unobserve(currentContainer);
@@ -141,11 +141,11 @@ export default function Graph({
           labels: {
             color: 'white',
             font: {
-              size: 10
+              size: 10,
             },
             boxWidth: 12,
-            padding: 10
-          }
+            padding: 10,
+          },
         },
         tooltip: {
           backgroundColor: 'var(--card-bg)',
@@ -155,10 +155,10 @@ export default function Graph({
           borderWidth: 1,
           padding: 8,
           boxWidth: 10,
-          boxHeight: 10
-        }
+          boxHeight: 10,
+        },
       },
-      color: 'white'
+      color: 'white',
     };
 
     // Only add scales for bar and line charts
@@ -170,40 +170,40 @@ export default function Graph({
             ticks: {
               color: 'white',
               font: {
-                size: 10
+                size: 10,
               },
               maxRotation: 45,
               minRotation: 45,
               autoSkip: true,
-              maxTicksLimit: 10
+              maxTicksLimit: 10,
             },
             grid: {
               color: 'rgba(255, 255, 255, 0.1)',
               border: {
-                display: false
-              }
-            }
+                display: false,
+              },
+            },
           },
           y: {
             beginAtZero: true,
             ticks: {
               color: 'white',
               font: {
-                size: 10
+                size: 10,
               },
-              precision: 0
+              precision: 0,
             },
             grid: {
               color: 'rgba(255, 255, 255, 0.1)',
               border: {
-                display: false
-              }
-            }
-          }
-        }
+                display: false,
+              },
+            },
+          },
+        },
       };
     }
-    
+
     return baseOptions;
   };
 
@@ -217,7 +217,7 @@ export default function Graph({
         backgroundColor: chartColors,
         borderColor: chartColors,
         borderWidth: 1,
-        borderRadius: 4
+        borderRadius: 4,
       },
     ],
   });
@@ -233,7 +233,7 @@ export default function Graph({
         borderWidth: 2,
         tension: 0.1,
         pointRadius: 3,
-        pointHoverRadius: 5
+        pointHoverRadius: 5,
       },
     ],
   });
@@ -247,7 +247,7 @@ export default function Graph({
         backgroundColor: chartColors,
         borderColor: chartColors,
         borderWidth: 1,
-        hoverOffset: 5
+        hoverOffset: 5,
       },
     ],
   });
@@ -261,28 +261,28 @@ export default function Graph({
       ) : data && data.length > 0 ? (
         <>
           {type === 'bar' && (
-            <Bar 
-              data={getBarData()} 
-              options={getOptions()} 
-              ref={(ref) => {
+            <Bar
+              data={getBarData()}
+              options={getOptions()}
+              ref={ref => {
                 if (ref) chartRef.current = ref;
               }}
             />
           )}
           {type === 'line' && (
-            <Line 
-              data={getLineData()} 
-              options={getOptions()} 
-              ref={(ref) => {
+            <Line
+              data={getLineData()}
+              options={getOptions()}
+              ref={ref => {
                 if (ref) chartRef.current = ref;
               }}
             />
           )}
           {type === 'doughnut' && (
-            <Doughnut 
-              data={getDoughnutData()} 
-              options={getOptions()} 
-              ref={(ref) => {
+            <Doughnut
+              data={getDoughnutData()}
+              options={getOptions()}
+              ref={ref => {
                 if (ref) chartRef.current = ref;
               }}
             />

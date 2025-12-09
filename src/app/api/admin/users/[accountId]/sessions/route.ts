@@ -11,37 +11,46 @@ export async function GET(
 ) {
   try {
     const session = await getServerSession(authOptions);
-    
+
     if (!session?.user?.isAdmin) {
-      return NextResponse.json({
-        message: "Unauthorized",
-        success: false,
-      }, { status: 401 });
+      return NextResponse.json(
+        {
+          message: 'Unauthorized',
+          success: false,
+        },
+        { status: 401 }
+      );
     }
-    
+
     const { accountId } = await params;
-    
+
     if (!accountId) {
-      return NextResponse.json({
-        message: "Account ID is required",
-        success: false,
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          message: 'Account ID is required',
+          success: false,
+        },
+        { status: 400 }
+      );
     }
-    
+
     const sessions = await getSessions(accountId);
-    const sanitizedSessions = Array.isArray(sessions) 
+    const sanitizedSessions = Array.isArray(sessions)
       ? sessions.map(session => sanitizeMongoDocument(session))
       : [];
-    
+
     return NextResponse.json({
       sessions: sanitizedSessions,
       success: true,
     });
   } catch (error) {
     logger.error('Error getting user sessions:', error);
-    return NextResponse.json({
-      message: "Failed to retrieve user sessions",
-      success: false,
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        message: 'Failed to retrieve user sessions',
+        success: false,
+      },
+      { status: 500 }
+    );
   }
 }

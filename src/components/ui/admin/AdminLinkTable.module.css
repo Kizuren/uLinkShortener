@@ -161,25 +161,25 @@
   .hideOnMobile {
     display: none;
   }
-  
+
   .shortLinkCell {
     width: 25%;
   }
-  
+
   .targetUrl {
     width: 45%;
   }
-  
+
   .targetUrl a {
     max-width: 120px;
   }
-  
+
   .actions {
     width: 60%;
     flex-direction: column;
   }
-  
-  .copyButton, 
+
+  .copyButton,
   .deleteButton {
     padding: 0.3rem 0.5rem;
     font-size: 0.75rem;
@@ -191,28 +191,28 @@
   .tableContainer {
     border: none;
   }
-  
+
   .linkTable {
     font-size: 0.8rem;
   }
-  
-  .linkTable th, 
+
+  .linkTable th,
   .linkTable td {
     padding: 0.5rem;
   }
-  
+
   .shortLinkCell {
     width: 30%;
   }
-  
+
   .targetUrl {
     width: 40%;
   }
-  
+
   .targetUrl a {
     max-width: 80px;
   }
-  
+
   .actions {
     width: 70%;
   }

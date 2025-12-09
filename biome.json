@@ -96,5 +96,11 @@
         "organizeImports": "on"
       }
     }
+  },
+  "css": {
+    "parser": {
+      "cssModules": true,
+      "tailwindDirectives": true
+    }
   }
 }

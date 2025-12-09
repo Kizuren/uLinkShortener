@@ -28,11 +28,7 @@ export async function getIPData(ip: string): Promise<IPAddress> {
       timestamp: new Date(),
     };
 
-    await collection.updateOne(
-      { ip_address: ip },
-      { $set: ipData },
-      { upsert: true }
-    );
+    await collection.updateOne({ ip_address: ip }, { $set: ipData }, { upsert: true });
 
     return ipData;
   } catch {
@@ -42,7 +38,7 @@ export async function getIPData(ip: string): Promise<IPAddress> {
       isp: 'Unknown',
       country: 'Unknown',
       timestamp: new Date(),
-    }
+    };
   }
 }
 
@@ -54,18 +50,19 @@ export interface AnalyticsQueryOptions {
 }
 
 export async function getAllAnalytics(
-  account_id: string, 
-  link_id: string, 
-  query_options: AnalyticsQueryOptions = {}): Promise<{analytics: Analytics[]; total: number}> {
+  account_id: string,
+  link_id: string,
+  query_options: AnalyticsQueryOptions = {}
+): Promise<{ analytics: Analytics[]; total: number }> {
   try {
     const { db } = await getMongo();
     const collection = db.collection<Analytics>(Collection.analytics_collection);
-    
+
     const { startDate, endDate, page = 1, limit = 50 } = query_options;
     const timestamp: Record<string, Date> = {};
-    if (startDate) timestamp["$gte"] = startDate;
-    if (endDate) timestamp["$lte"] = endDate;
-    
+    if (startDate) timestamp['$gte'] = startDate;
+    if (endDate) timestamp['$lte'] = endDate;
+
     // Overcomplicated shit
     const query: Omit<Partial<Analytics>, 'timestamp'> & { timestamp?: Record<string, Date> } = {
       account_id,
@@ -74,19 +71,19 @@ export async function getAllAnalytics(
     if (Object.keys(timestamp).length > 0) {
       query.timestamp = timestamp;
     }
-    
+
     const cursor = collection
-    .find(query)
-    .sort({ timestamp: -1 }) // Most recent first
-    .skip((page - 1) * limit)
-    .limit(limit);
-    
+      .find(query)
+      .sort({ timestamp: -1 }) // Most recent first
+      .skip((page - 1) * limit)
+      .limit(limit);
+
     const analytics = await cursor.toArray();
     const total = await collection.countDocuments(query);
 
     return { analytics, total };
   } catch {
-    return {analytics: [], total: 0};
+    return { analytics: [], total: 0 };
   }
 }
 
@@ -95,23 +92,29 @@ export async function saveAnalytics(analytics: Analytics): Promise<DetailedRetur
     const { db } = await getMongo();
     const collection = db.collection<Analytics>(Collection.analytics_collection);
     await collection.insertOne(analytics);
-    
-    return { success: true, status: "Analytics successfully saved" };
+
+    return { success: true, status: 'Analytics successfully saved' };
   } catch {
-    return { success: false, status: "An exception occured" };
+    return { success: false, status: 'An exception occured' };
   }
 }
 
-export async function removeAllAnalytics(account_id: string, link_id: string): Promise<DetailedReturn> {
+export async function removeAllAnalytics(
+  account_id: string,
+  link_id: string
+): Promise<DetailedReturn> {
   try {
     const { db } = await getMongo();
     const collection = db.collection<Analytics>(Collection.analytics_collection);
-    const result = await collection.deleteMany({account_id: account_id, link_id: link_id});
+    const result = await collection.deleteMany({ account_id: account_id, link_id: link_id });
     const success = result.deletedCount > 0;
 
-    return { success, status: success ? "Analytics were successfully deleted" : "No analytics found" };
+    return {
+      success,
+      status: success ? 'Analytics were successfully deleted' : 'No analytics found',
+    };
   } catch {
-    return { success: false, status: "An exception occured" };
+    return { success: false, status: 'An exception occured' };
   }
 }
 
@@ -119,28 +122,35 @@ export async function removeAllAnalyticsFromUser(account_id: string): Promise<De
   try {
     const { db } = await getMongo();
     const collection = db.collection<Analytics>(Collection.analytics_collection);
-    const result = await collection.deleteMany({account_id: account_id});
+    const result = await collection.deleteMany({ account_id: account_id });
     const hasRemovedAnalytics = result.deletedCount > 0;
-    
-    return { success: true, status: hasRemovedAnalytics ? "All analytics were successfully removed" : "No analytics found" };
+
+    return {
+      success: true,
+      status: hasRemovedAnalytics
+        ? 'All analytics were successfully removed'
+        : 'No analytics found',
+    };
   } catch {
-    return { success: false, status: "An exception occured" };
+    return { success: false, status: 'An exception occured' };
   }
 }
 
-export async function removeAnalytics(account_id: string, link_id: string, _id: string): Promise<DetailedReturn> {
+export async function removeAnalytics(
+  account_id: string,
+  link_id: string,
+  _id: string
+): Promise<DetailedReturn> {
   const objectId = safeObjectId(_id);
-  if(!objectId) return { success: false, status: "Invalid object ID" };
+  if (!objectId) return { success: false, status: 'Invalid object ID' };
 
   try {
     const { db } = await getMongo();
     const collection = db.collection<Analytics>(Collection.analytics_collection);
-    await collection.deleteOne(
-      {_id: objectId, account_id: account_id, link_id: link_id}
-    );
-    
-    return { success: true, status: "Analytics successfully removed" };
+    await collection.deleteOne({ _id: objectId, account_id: account_id, link_id: link_id });
+
+    return { success: true, status: 'Analytics successfully removed' };
   } catch {
-    return { success: false, status: "An exception occured" };
+    return { success: false, status: 'An exception occured' };
   }
 }

@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
@@ -16,7 +16,7 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (status === "unauthenticated") {
+    if (status === 'unauthenticated') {
       router.push('/');
     }
   }, [status, router]);
@@ -31,11 +31,11 @@ export default function Dashboard() {
     try {
       setLoading(true);
       const response = await fetch('/api/links');
-      
+
       if (!response.ok) {
         throw new Error('Failed to fetch links');
       }
-      
+
       const data = await response.json();
       if (data.success) {
         setLinks(data.links);
@@ -50,11 +50,11 @@ export default function Dashboard() {
     }
   };
 
-  if (status === "loading") {
+  if (status === 'loading') {
     return <div className={styles.loading}>Loading...</div>;
   }
 
-  if (status === "unauthenticated") {
+  if (status === 'unauthenticated') {
     return null;
   }
 
@@ -63,12 +63,12 @@ export default function Dashboard() {
       <header className={styles.dashboardHeader}>
         <h1 className={styles.dashboardTitle}>Dashboard</h1>
         <div className={styles.actionButtons}>
-          <Link href="/dashboard/security">
+          <Link href='/dashboard/security'>
             <button className={styles.securityButton}>Security Settings</button>
           </Link>
-          
+
           {session?.user?.isAdmin && (
-            <Link href="/admin">
+            <Link href='/admin'>
               <button className={styles.adminButton}>Admin Dashboard</button>
             </Link>
           )}
@@ -79,7 +79,7 @@ export default function Dashboard() {
         <h2>Create New Short Link</h2>
         <CreateLinkForm onLinkCreated={fetchLinks} />
       </section>
-      
+
       <section className={styles.linksSection}>
         <h2>Your Shortened Links</h2>
         {loading ? (
@@ -104,15 +104,15 @@ function CreateLinkForm({ onLinkCreated }: CreateLinkFormProps) {
   const [url, setUrl] = useState('');
   const [creating, setCreating] = useState(false);
   const { showToast } = useToast();
-  
-  const handleSubmit = async (e: { preventDefault: () => void; }) => {
+
+  const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    
+
     if (!url.trim()) {
       showToast('Please enter a URL', 'error');
       return;
     }
-    
+
     try {
       setCreating(true);
       const response = await fetch('/api/link', {
@@ -122,9 +122,9 @@ function CreateLinkForm({ onLinkCreated }: CreateLinkFormProps) {
         },
         body: JSON.stringify({ target_url: url }),
       });
-      
+
       const data = await response.json();
-      
+
       if (response.ok && data.success) {
         showToast('Link created successfully!', 'success');
         setUrl('');
@@ -139,23 +139,19 @@ function CreateLinkForm({ onLinkCreated }: CreateLinkFormProps) {
       setCreating(false);
     }
   };
-  
+
   return (
     <form onSubmit={handleSubmit} className={styles.createForm}>
       <div className={styles.inputGroup}>
         <input
-          type="url"
+          type='url'
           value={url}
-          onChange={(e) => setUrl(e.target.value)}
-          placeholder="Enter URL to shorten"
+          onChange={e => setUrl(e.target.value)}
+          placeholder='Enter URL to shorten'
           className={styles.urlInput}
           required
         />
-        <button 
-          type="submit" 
-          className={styles.createButton}
-          disabled={creating}
-        >
+        <button type='submit' className={styles.createButton} disabled={creating}>
           {creating ? 'Creating...' : 'Create Short Link'}
         </button>
       </div>

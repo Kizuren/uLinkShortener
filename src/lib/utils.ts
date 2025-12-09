@@ -1,6 +1,6 @@
-import { NextRequest } from "next/server";
+import { NextRequest } from 'next/server';
 import { UAParser } from 'ua-parser-js';
-import { getIPData } from "./analyticsdb";
+import { getIPData } from './analyticsdb';
 
 // For accounts
 const letterBytes = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -33,23 +33,23 @@ export function generateAuthToken(): string {
 }
 
 // For Links
-export function isValidUrl(urlStr: string) : boolean {
-  if(urlStr.trim() === "") {
+export function isValidUrl(urlStr: string): boolean {
+  if (urlStr.trim() === '') {
     return false;
   }
 
   try {
     const parsedUrl = new URL(urlStr);
-    return parsedUrl.protocol !== "" && parsedUrl.hostname !== "";
+    return parsedUrl.protocol !== '' && parsedUrl.hostname !== '';
   } catch {
     return false;
   }
 }
 
 // For Clients
-const defaultValue = "Unknown"
-function valueOrDefault(value: string | null) : string {
-  return !value || value?.trim() === "" ? defaultValue : value;
+const defaultValue = 'Unknown';
+function valueOrDefault(value: string | null): string {
+  return !value || value?.trim() === '' ? defaultValue : value;
 }
 
 export async function getClientInfo(req: NextRequest) {
@@ -109,9 +109,9 @@ export async function getClientInfo(req: NextRequest) {
 // For stats
 export function formatOSStrings(os_string: string): string {
   os_string = os_string.trim();
-  os_string = os_string.replaceAll("\"", ""); // Windows usually reports ""Windows"""
-  os_string = os_string.replaceAll("CPU ", ""); // iOS usually reports "CPU ....."
-  os_string = os_string.replaceAll(" like Mac OS X", ""); // iOS usually reports at its end " like Mac OS X"
+  os_string = os_string.replaceAll('"', ''); // Windows usually reports ""Windows"""
+  os_string = os_string.replaceAll('CPU ', ''); // iOS usually reports "CPU ....."
+  os_string = os_string.replaceAll(' like Mac OS X', ''); // iOS usually reports at its end " like Mac OS X"
 
   return os_string;
 }
@@ -119,9 +119,9 @@ export function formatOSStrings(os_string: string): string {
 // For MongoDB
 export function sanitizeMongoDocument<T>(doc: T & { _id?: unknown }): T {
   if (!doc) return doc;
-  
+
   const sanitized = { ...doc };
   delete sanitized._id;
-  
+
   return sanitized;
 }
