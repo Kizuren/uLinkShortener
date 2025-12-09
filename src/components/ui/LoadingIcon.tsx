@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 interface LoadingIconProps {
   size?: number;
@@ -7,14 +7,14 @@ interface LoadingIconProps {
   className?: string;
 }
 
-export default function LoadingIcon({ 
-  size = 24, 
+export default function LoadingIcon({
+  size = 24,
   color = 'var(--accent)',
   thickness = 2,
-  className = ''
+  className = '',
 }: LoadingIconProps) {
   return (
-    <div 
+    <div
       className={`loading-spinner ${className}`}
       style={{
         width: `${size}px`,

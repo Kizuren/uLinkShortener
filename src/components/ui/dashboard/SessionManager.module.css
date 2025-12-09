@@ -41,7 +41,9 @@
   color: var(--text-primary);
 }
 
-.loading, .error, .noSessions {
+.loading,
+.error,
+.noSessions {
   padding: 2rem;
   text-align: center;
   border-radius: 4px;
@@ -133,7 +135,7 @@
   .sessionsTable td:nth-child(3) {
     display: none;
   }
-  
+
   .sessionsTable th:nth-child(4),
   .sessionsTable td:nth-child(4) {
     display: none;
@@ -144,12 +146,12 @@
   .sessionsTable {
     font-size: 0.8rem;
   }
-  
-  .sessionsTable th, 
+
+  .sessionsTable th,
   .sessionsTable td {
     padding: 0.5rem;
   }
-  
+
   .revokeButton {
     padding: 0.3rem 0.5rem;
     font-size: 0.75rem;

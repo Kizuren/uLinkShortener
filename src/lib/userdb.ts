@@ -20,7 +20,7 @@ export async function isUserAdmin(account_id: string): Promise<boolean> {
     const { db } = await getMongo();
     const collection = db.collection<User>(Collection.user_collection);
 
-    const user = await collection.findOne({account_id: account_id});
+    const user = await collection.findOne({ account_id: account_id });
 
     return user?.is_admin ?? false;
   } catch {
@@ -39,27 +39,28 @@ export async function makeUserAdmin(account_id: string, admin: boolean): Promise
     );
 
     if (result.matchedCount === 0) {
-      return { success: false, status: "User not found" };
+      return { success: false, status: 'User not found' };
     }
 
-    return { 
-      success: result.modifiedCount > 0, 
-      status: result.modifiedCount > 0 
-        ? `User is now ${admin ? 'an admin' : 'no longer an admin'}`
-        : "No changes were made"
+    return {
+      success: result.modifiedCount > 0,
+      status:
+        result.modifiedCount > 0
+          ? `User is now ${admin ? 'an admin' : 'no longer an admin'}`
+          : 'No changes were made',
     };
   } catch (error) {
     console.error('Error toggling admin status:', error);
-    return { success: false, status: "An exception occurred" };
+    return { success: false, status: 'An exception occurred' };
   }
 }
 
-export async function existsUser(account_id: string) : Promise<boolean> {
+export async function existsUser(account_id: string): Promise<boolean> {
   try {
     const { db } = await getMongo();
     const collection = db.collection<User>(Collection.user_collection);
 
-    const user = await collection.findOne({account_id: account_id});
+    const user = await collection.findOne({ account_id: account_id });
 
     return user !== null;
   } catch {
@@ -67,7 +68,9 @@ export async function existsUser(account_id: string) : Promise<boolean> {
   }
 }
 
-export async function createUser(is_admin: boolean): Promise<{account_id: string, return: DetailedReturn}> {
+export async function createUser(
+  is_admin: boolean
+): Promise<{ account_id: string; return: DetailedReturn }> {
   try {
     const { db } = await getMongo();
     const collection = db.collection<User>(Collection.user_collection);
@@ -81,17 +84,18 @@ export async function createUser(is_admin: boolean): Promise<{account_id: string
     } while (duplicate);
 
     const newUser: User = {
-        account_id: account_id,
-        is_admin: is_admin,
-        created_at: new Date()
+      account_id: account_id,
+      is_admin: is_admin,
+      created_at: new Date(),
     };
 
     const result = await collection.insertOne(newUser);
-    if(!result.acknowledged) return { account_id: "", return: {success: false, status: "An error occured"} };
+    if (!result.acknowledged)
+      return { account_id: '', return: { success: false, status: 'An error occured' } };
 
-    return { account_id, return: {success: true, status: "User was successfully created"} };
+    return { account_id, return: { success: true, status: 'User was successfully created' } };
   } catch {
-    return { account_id: "", return: {success: false, status: "An exception occured"} };
+    return { account_id: '', return: { success: false, status: 'An exception occured' } };
   }
 }
 
@@ -100,15 +104,16 @@ export async function removeUser(account_id: string): Promise<DetailedReturn> {
     const { db } = await getMongo();
     const collection = db.collection<User>(Collection.user_collection);
 
-    const result = await collection.deleteOne({account_id: account_id});
+    const result = await collection.deleteOne({ account_id: account_id });
     const removeAnalyticsResult = await removeAllAnalyticsFromUser(account_id);
     const removeLinksResult = await removeAllLinksFromUser(account_id);
     await removeAllSessionsByAccountId(account_id);
-    const success = result.deletedCount > 0 && removeAnalyticsResult.success && removeLinksResult.success;
+    const success =
+      result.deletedCount > 0 && removeAnalyticsResult.success && removeLinksResult.success;
 
-    return { success: success, status: success ? "User successfully deleted" : "An error occured" };
+    return { success: success, status: success ? 'User successfully deleted' : 'An error occured' };
   } catch {
-    return { success: false, status: "An exception occured" };
+    return { success: false, status: 'An exception occured' };
   }
 }
 
@@ -116,7 +121,7 @@ export async function getUserById(account_id: string): Promise<User | null> {
   try {
     const { db } = await getMongo();
     const collection = db.collection<User>(Collection.user_collection);
-    
+
     const user = await collection.findOne({ account_id });
     return user;
   } catch {
@@ -124,7 +129,9 @@ export async function getUserById(account_id: string): Promise<User | null> {
   }
 }
 
-export async function listUsers(query_options: UserQueryOptions = {}): Promise<{users: User[] | null, total: number, return: DetailedReturn}> {
+export async function listUsers(
+  query_options: UserQueryOptions = {}
+): Promise<{ users: User[] | null; total: number; return: DetailedReturn }> {
   try {
     const { db } = await getMongo();
     const collection = db.collection<User>(Collection.user_collection);
@@ -138,21 +145,25 @@ export async function listUsers(query_options: UserQueryOptions = {}): Promise<{
       if (endDate) query.created_at.$lte = endDate;
     }
 
-    if (search && search.trim() !== "") {
-      query.account_id = { $regex: new RegExp(search, "i") };
+    if (search && search.trim() !== '') {
+      query.account_id = { $regex: new RegExp(search, 'i') };
     }
 
     const cursor = collection
-    .find(query)
-    .sort({ created_at: -1 }) // Most recent first
-    .skip((page - 1) * limit)
-    .limit(limit);
+      .find(query)
+      .sort({ created_at: -1 }) // Most recent first
+      .skip((page - 1) * limit)
+      .limit(limit);
 
     const users = await cursor.toArray();
     const total = await collection.countDocuments(query);
 
-    return { users: users, total: total, return: {success: true, status: "Users successfully fetched"} };
+    return {
+      users: users,
+      total: total,
+      return: { success: true, status: 'Users successfully fetched' },
+    };
   } catch {
-    return { users: null, total: 0, return: {success: false, status: "An exception occured"} };
+    return { users: null, total: 0, return: { success: false, status: 'An exception occured' } };
   }
 }

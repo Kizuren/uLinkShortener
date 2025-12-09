@@ -40,7 +40,11 @@
 }
 
 /* Base button styles for all buttons */
-.loginBtn, .registerBtn, .loginSubmitBtn, .logoutBtn, .dashboardBtn {
+.loginBtn,
+.registerBtn,
+.loginSubmitBtn,
+.logoutBtn,
+.dashboardBtn {
   background-color: var(--accent);
   color: var(--text-primary);
   border: none;
@@ -51,7 +55,10 @@
   padding: clamp(4px, 1vw, 8px) clamp(8px, 2vw, 16px);
 }
 
-.loginBtn:hover, .registerBtn:hover, .loginSubmitBtn:hover, .dashboardBtn:hover {
+.loginBtn:hover,
+.registerBtn:hover,
+.loginSubmitBtn:hover,
+.dashboardBtn:hover {
   background-color: var(--accent-hover);
   filter: brightness(1.2);
 }
@@ -85,7 +92,7 @@
   .container {
     padding: 0 1rem;
   }
-  
+
   .auth {
     gap: 5px;
   }
@@ -100,14 +107,15 @@
   .header {
     height: auto;
   }
-  
+
   .auth {
     width: 100%;
     justify-content: center;
     gap: 10px;
   }
-  
-  .loginBtn, .registerBtn {
+
+  .loginBtn,
+  .registerBtn {
     padding: 8px 16px;
     font-size: 0.9rem;
   }
@@ -166,7 +174,7 @@
     flex-direction: column;
     align-items: stretch;
   }
-  
+
   .auth {
     min-width: auto;
   }

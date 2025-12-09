@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React, { createContext, useState, useContext, ReactNode } from 'react';
 
@@ -24,15 +24,15 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   const showToast = (message: string, type: ToastType = 'info') => {
     const id = Math.random().toString(36).substring(2, 9);
     const newToast = { id, message, type };
-    setToasts((prev) => [...prev, newToast]);
-    
+    setToasts(prev => [...prev, newToast]);
+
     setTimeout(() => {
       hideToast(id);
     }, 2000);
   };
 
   const hideToast = (id: string) => {
-    setToasts((prev) => prev.filter((toast) => toast.id !== id));
+    setToasts(prev => prev.filter(toast => toast.id !== id));
   };
 
   return (

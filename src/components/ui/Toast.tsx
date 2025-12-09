@@ -1,4 +1,4 @@
-"use client";   
+'use client';
 
 import { useToast } from '@/contexts/ToastContext';
 import styles from './Toast.module.css';
@@ -10,8 +10,8 @@ export default function Toast() {
 
   return (
     <div className={styles.toastContainer}>
-      {toasts.map((toast) => (
-        <div 
+      {toasts.map(toast => (
+        <div
           key={toast.id}
           className={`${styles.toast} ${styles[toast.type]} ${styles.toastShow}`}
           onClick={() => hideToast(toast.id)}

@@ -107,13 +107,13 @@
     align-items: flex-start;
     gap: 1rem;
   }
-  
+
   .dangerCard {
     flex-direction: column;
     gap: 1.5rem;
     align-items: flex-start;
   }
-  
+
   .deleteAccountBtn {
     width: 100%;
   }

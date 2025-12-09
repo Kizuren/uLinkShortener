@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useState, useEffect, useRef } from 'react';
 import { useSession } from 'next-auth/react';
@@ -15,7 +15,7 @@ export default function SessionManager() {
   const [error, setError] = useState<string | null>(null);
   const [revoking, setRevoking] = useState<string | null>(null);
   const { showToast } = useToast();
-  
+
   const isFetchingSessions = useRef(false);
 
   useEffect(() => {
@@ -23,17 +23,17 @@ export default function SessionManager() {
 
     async function fetchSessions() {
       if (!session?.user?.accountId) return;
-      
+
       try {
         isFetchingSessions.current = true;
         setLoading(true);
-        
+
         const response = await fetch('/api/auth/sessions');
-        
+
         if (!response.ok) {
           throw new Error('Failed to fetch sessions');
         }
-        
+
         const data = await response.json();
         if (data.success) {
           setSessions(data.sessions);
@@ -60,13 +60,14 @@ export default function SessionManager() {
     }
 
     const term = searchTerm.toLowerCase();
-    const filtered = sessions.filter(s => 
-      s.userAgent.toLowerCase().includes(term) ||
-      s.ipAddress.toLowerCase().includes(term) ||
-      new Date(s.lastActive).toLocaleString().toLowerCase().includes(term) ||
-      new Date(s.createdAt).toLocaleString().toLowerCase().includes(term)
+    const filtered = sessions.filter(
+      s =>
+        s.userAgent.toLowerCase().includes(term) ||
+        s.ipAddress.toLowerCase().includes(term) ||
+        new Date(s.lastActive).toLocaleString().toLowerCase().includes(term) ||
+        new Date(s.createdAt).toLocaleString().toLowerCase().includes(term)
     );
-    
+
     setFilteredSessions(filtered);
   }, [searchTerm, sessions]);
 
@@ -74,25 +75,23 @@ export default function SessionManager() {
     try {
       const sessionToRevoke = sessions.find(s => s.id === sessionId);
       if (sessionToRevoke?.isCurrentSession) {
-        showToast("You cannot revoke your current session", "error");
+        showToast('You cannot revoke your current session', 'error');
         return;
       }
 
       setRevoking(sessionId);
-      
+
       const response = await fetch('/api/auth/sessions/revoke', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ sessionId })
+        body: JSON.stringify({ sessionId }),
       });
-      
+
       const data = await response.json();
-      
+
       if (response.ok && data.success) {
         showToast('Session revoked successfully', 'success');
-        setSessions(prevSessions => 
-          prevSessions.filter(s => s.id !== sessionId)
-        );
+        setSessions(prevSessions => prevSessions.filter(s => s.id !== sessionId));
       } else {
         showToast(data.message || 'Failed to revoke session', 'error');
       }
@@ -120,26 +119,26 @@ export default function SessionManager() {
   return (
     <div className={styles.sessionManager}>
       <h2>Active Sessions</h2>
-      
+
       <div className={styles.searchContainer}>
         <input
-          type="text"
-          placeholder="Search sessions..."
+          type='text'
+          placeholder='Search sessions...'
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={e => setSearchTerm(e.target.value)}
           className={styles.searchInput}
         />
         {searchTerm && (
-          <button 
+          <button
             className={styles.clearSearchButton}
             onClick={() => setSearchTerm('')}
-            title="Clear search"
+            title='Clear search'
           >
             ✕
           </button>
         )}
       </div>
-      
+
       {sessions.length === 0 ? (
         <p className={styles.noSessions}>No active sessions found.</p>
       ) : filteredSessions.length === 0 ? (
@@ -157,7 +156,7 @@ export default function SessionManager() {
               </tr>
             </thead>
             <tbody>
-              {filteredSessions.map((s) => (
+              {filteredSessions.map(s => (
                 <tr key={s.id} className={s.isCurrentSession ? styles.currentSession : ''}>
                   <td className={styles.deviceCell}>
                     {s.userAgent.split(' ').slice(0, 3).join(' ')}

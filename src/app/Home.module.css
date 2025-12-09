@@ -76,7 +76,9 @@
   padding: 1.5rem;
   box-shadow: var(--card-shadow);
   border: 1px solid var(--border-color);
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
   text-align: center;
 }
 
@@ -129,7 +131,9 @@
   padding: 1.5rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   border: 1px solid var(--border-color);
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
   height: 20rem;
   display: flex;
   flex-direction: column;
@@ -157,7 +161,7 @@
   .graphs-container {
     grid-template-columns: 1fr;
   }
-  
+
   .hero-title {
     font-size: 2.5rem;
   }

@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useState } from 'react';
 import { useSession, signOut } from 'next-auth/react';
@@ -19,20 +19,20 @@ export default function SecurityPage() {
   const handleAccountDeletion = async () => {
     try {
       setIsDeleting(true);
-      
+
       const response = await fetch('/api/auth/remove', {
         method: 'DELETE',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({ account_id: session?.user?.accountId }),
       });
-      
+
       const data = await response.json();
-      
+
       if (response.ok && data.success) {
         showToast('Account deleted successfully', 'success');
-        
+
         await signOut({ redirect: false });
         router.push('/');
       } else {
@@ -52,7 +52,7 @@ export default function SecurityPage() {
     <div className={styles.container}>
       <header className={styles.header}>
         <h1>Security Settings</h1>
-        <Link href="/dashboard" className={styles.backLink}>
+        <Link href='/dashboard' className={styles.backLink}>
           Back to Dashboard
         </Link>
       </header>
@@ -68,11 +68,11 @@ export default function SecurityPage() {
             <div className={styles.dangerInfo}>
               <h3>Delete Account</h3>
               <p>
-                This will permanently delete your account and all associated data. 
-                This action cannot be undone.
+                This will permanently delete your account and all associated data. This action
+                cannot be undone.
               </p>
             </div>
-            <button 
+            <button
               className={styles.deleteAccountBtn}
               onClick={() => setIsDeleteModalOpen(true)}
               disabled={isDeleting}
@@ -85,9 +85,9 @@ export default function SecurityPage() {
 
       <ConfirmModal
         isOpen={isDeleteModalOpen}
-        title="Delete Account"
-        message="Are you sure you want to delete your account? This will permanently remove your account and all your data, including all shortened links. This action cannot be undone."
-        confirmLabel={isDeleting ? "Deleting..." : "Delete Account"}
+        title='Delete Account'
+        message='Are you sure you want to delete your account? This will permanently remove your account and all your data, including all shortened links. This action cannot be undone.'
+        confirmLabel={isDeleting ? 'Deleting...' : 'Delete Account'}
         onConfirm={handleAccountDeletion}
         onCancel={() => setIsDeleteModalOpen(false)}
       />
