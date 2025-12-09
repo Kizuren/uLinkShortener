@@ -20,7 +20,7 @@ services:
     container_name: ulinkshortener-mongo
     restart: always
     environment:
-      MONGO_INITDB_ROOT_USERNAME: justasuser
+      MONGO_INITDB_ROOT_USERNAME: justauser
       MONGO_INITDB_ROOT_PASSWORD: veryimportantpasswd
       MONGO_INITDB_DATABASE: ulinkshortener
     command: mongod --bind_ip_all
